@@ -1,0 +1,285 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5F919273158B0D0600FCC748 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919272158B0D0600FCC748 /* UIKit.framework */; };
+		5F919275158B0D0600FCC748 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919274158B0D0600FCC748 /* Foundation.framework */; };
+		5F919277158B0D0600FCC748 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919276158B0D0600FCC748 /* CoreGraphics.framework */; };
+		5F91927D158B0D0600FCC748 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F91927B158B0D0600FCC748 /* InfoPlist.strings */; };
+		5F91927F158B0D0600FCC748 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91927E158B0D0600FCC748 /* main.m */; };
+		5F919283158B0D0600FCC748 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919282158B0D0600FCC748 /* AppDelegate.m */; };
+		5F919291158B0D4C00FCC748 /* SRAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919290158B0D4C00FCC748 /* SRAnimationView.m */; };
+		5F919294158B15AD00FCC748 /* SRTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919293158B15AD00FCC748 /* SRTViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5F91926E158B0D0600FCC748 /* SlimeRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlimeRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F919272158B0D0600FCC748 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5F919274158B0D0600FCC748 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5F919276158B0D0600FCC748 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5F91927A158B0D0600FCC748 /* SlimeRefresh-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SlimeRefresh-Info.plist"; sourceTree = "<group>"; };
+		5F91927C158B0D0600FCC748 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5F91927E158B0D0600FCC748 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5F919280158B0D0600FCC748 /* SlimeRefresh-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SlimeRefresh-Prefix.pch"; sourceTree = "<group>"; };
+		5F919281158B0D0600FCC748 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5F919282158B0D0600FCC748 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5F91928F158B0D4C00FCC748 /* SRAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRAnimationView.h; sourceTree = "<group>"; };
+		5F919290158B0D4C00FCC748 /* SRAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRAnimationView.m; sourceTree = "<group>"; };
+		5F919292158B15AD00FCC748 /* SRTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTViewController.h; sourceTree = "<group>"; };
+		5F919293158B15AD00FCC748 /* SRTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F91926B158B0D0600FCC748 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F919273158B0D0600FCC748 /* UIKit.framework in Frameworks */,
+				5F919275158B0D0600FCC748 /* Foundation.framework in Frameworks */,
+				5F919277158B0D0600FCC748 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5F919263158B0D0600FCC748 = {
+			isa = PBXGroup;
+			children = (
+				5F919278158B0D0600FCC748 /* SlimeRefresh */,
+				5F919271158B0D0600FCC748 /* Frameworks */,
+				5F91926F158B0D0600FCC748 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5F91926F158B0D0600FCC748 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F91926E158B0D0600FCC748 /* SlimeRefresh.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F919271158B0D0600FCC748 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5F919272158B0D0600FCC748 /* UIKit.framework */,
+				5F919274158B0D0600FCC748 /* Foundation.framework */,
+				5F919276158B0D0600FCC748 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F919278158B0D0600FCC748 /* SlimeRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				5F91928D158B0D2D00FCC748 /* SlimeRefresh */,
+				5F919281158B0D0600FCC748 /* AppDelegate.h */,
+				5F919282158B0D0600FCC748 /* AppDelegate.m */,
+				5F919279158B0D0600FCC748 /* Supporting Files */,
+				5F919292158B15AD00FCC748 /* SRTViewController.h */,
+				5F919293158B15AD00FCC748 /* SRTViewController.m */,
+			);
+			path = SlimeRefresh;
+			sourceTree = "<group>";
+		};
+		5F919279158B0D0600FCC748 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5F91927A158B0D0600FCC748 /* SlimeRefresh-Info.plist */,
+				5F91927B158B0D0600FCC748 /* InfoPlist.strings */,
+				5F91927E158B0D0600FCC748 /* main.m */,
+				5F919280158B0D0600FCC748 /* SlimeRefresh-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5F91928D158B0D2D00FCC748 /* SlimeRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				5F91928F158B0D4C00FCC748 /* SRAnimationView.h */,
+				5F919290158B0D4C00FCC748 /* SRAnimationView.m */,
+			);
+			path = SlimeRefresh;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5F91926D158B0D0600FCC748 /* SlimeRefresh */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F919286158B0D0600FCC748 /* Build configuration list for PBXNativeTarget "SlimeRefresh" */;
+			buildPhases = (
+				5F91926A158B0D0600FCC748 /* Sources */,
+				5F91926B158B0D0600FCC748 /* Frameworks */,
+				5F91926C158B0D0600FCC748 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SlimeRefresh;
+			productName = SlimeRefresh;
+			productReference = 5F91926E158B0D0600FCC748 /* SlimeRefresh.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F919265158B0D0600FCC748 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = zrz;
+			};
+			buildConfigurationList = 5F919268158B0D0600FCC748 /* Build configuration list for PBXProject "SlimeRefresh" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5F919263158B0D0600FCC748;
+			productRefGroup = 5F91926F158B0D0600FCC748 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5F91926D158B0D0600FCC748 /* SlimeRefresh */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5F91926C158B0D0600FCC748 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F91927D158B0D0600FCC748 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F91926A158B0D0600FCC748 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F91927F158B0D0600FCC748 /* main.m in Sources */,
+				5F919283158B0D0600FCC748 /* AppDelegate.m in Sources */,
+				5F919291158B0D4C00FCC748 /* SRAnimationView.m in Sources */,
+				5F919294158B15AD00FCC748 /* SRTViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5F91927B158B0D0600FCC748 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F91927C158B0D0600FCC748 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5F919284158B0D0600FCC748 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5F919285158B0D0600FCC748 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5F919287158B0D0600FCC748 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SlimeRefresh/SlimeRefresh-Prefix.pch";
+				INFOPLIST_FILE = "SlimeRefresh/SlimeRefresh-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5F919288158B0D0600FCC748 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SlimeRefresh/SlimeRefresh-Prefix.pch";
+				INFOPLIST_FILE = "SlimeRefresh/SlimeRefresh-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F919268158B0D0600FCC748 /* Build configuration list for PBXProject "SlimeRefresh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F919284158B0D0600FCC748 /* Debug */,
+				5F919285158B0D0600FCC748 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F919286158B0D0600FCC748 /* Build configuration list for PBXNativeTarget "SlimeRefresh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F919287158B0D0600FCC748 /* Debug */,
+				5F919288158B0D0600FCC748 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F919265158B0D0600FCC748 /* Project object */;
+}
