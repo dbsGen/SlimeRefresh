@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SRAnimationView : UIView
+@class SRSlimeView;
+
+@interface SRSlimeView : UIView
 
 @property (nonatomic, assign)   CGPoint startPoint, toPoint;
-@property (nonatomic, assign)   CGFloat viscous;    //default 35
+@property (nonatomic, assign)   CGFloat viscous;    //default 55
 @property (nonatomic, assign)   CGFloat radius;     //default 13
-@property (nonatomic, retain)   UIColor *bodyColor;
+@property (nonatomic, retain)   UIColor *bodyColor,
+                                        *skinColor;
+
+- (void)setPullApartTarget:(id)target action:(SEL)action;
 
 @end

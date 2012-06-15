@@ -7,14 +7,16 @@
 //
 
 #import "SRTViewController.h"
-#import "SRAnimationView.h"
+#import "SRRefreshView.h"
 
 @interface SRTViewController ()
+<UIScrollViewDelegate, SRRefreshDelegate>
 
 @end
 
 @implementation SRTViewController {
-    SRAnimationView *_slimeView;
+    SRRefreshView   *_slimeView;
+    UIScrollView    *_scrollView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -22,9 +24,20 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _slimeView = [[SRAnimationView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        _slimeView.startPoint = CGPointMake(20, 40);
-        [self.view addSubview:_slimeView];
+        CGRect bounds = self.view.bounds;
+        _scrollView = [[UIScrollView alloc] initWithFrame:bounds];
+        bounds.size.height += 1;
+        _scrollView.contentSize = bounds.size;
+        _scrollView.delegate = self;
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+        view.backgroundColor = [UIColor redColor];
+        [_scrollView addSubview:view];
+        [self.view addSubview:_scrollView];
+        
+        _slimeView = [[SRRefreshView alloc] initWithFrame:CGRectMake(0, -100, 320, 100)];
+        _slimeView.delegate = self;
+        _slimeView.scrollView = _scrollView;
+        [_scrollView addSubview:_slimeView];
     }
     return self;
 }
@@ -46,10 +59,24 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+#pragma mark - scrollView delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    UITouch *touch = [touches anyObject];
-    _slimeView.toPoint = [touch locationInView:self.view];
+    [_slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_slimeView scrollViewDidEndDraging];
+}
+
+#pragma mark - slimeRefresh delegate
+
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    [_slimeView performSelector:@selector(endRefresh)
+                     withObject:nil afterDelay:5];
 }
 
 @end

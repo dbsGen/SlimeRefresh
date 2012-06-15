@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SRRefreshDelegate;
+
 @interface SRRefreshView : UIView
+
+@property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
+@property (nonatomic, assign)   BOOL    loading;
+@property (nonatomic, assign)   UIScrollView    *scrollView;
+
+- (void)scrollViewDidScroll;
+- (void)scrollViewDidEndDraging;
+- (void)endRefresh;
+
+@end
+
+@protocol SRRefreshDelegate <NSObject>
+
+- (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView;
 
 @end

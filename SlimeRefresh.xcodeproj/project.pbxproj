@@ -7,17 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		184CE2E3158B834F003C2C83 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 184CE2E1158B834F003C2C83 /* sr_refresh.png */; };
+		184CE2E4158B834F003C2C83 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 184CE2E2158B834F003C2C83 /* sr_refresh@2X.png */; };
+		184CE2EA158B86C6003C2C83 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2E9158B86C6003C2C83 /* SRRefreshView.m */; };
+		184CE2EC158B874A003C2C83 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2EB158B874A003C2C83 /* SRSlimeView.m */; };
 		5F919273158B0D0600FCC748 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919272158B0D0600FCC748 /* UIKit.framework */; };
 		5F919275158B0D0600FCC748 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919274158B0D0600FCC748 /* Foundation.framework */; };
 		5F919277158B0D0600FCC748 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919276158B0D0600FCC748 /* CoreGraphics.framework */; };
 		5F91927D158B0D0600FCC748 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F91927B158B0D0600FCC748 /* InfoPlist.strings */; };
 		5F91927F158B0D0600FCC748 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91927E158B0D0600FCC748 /* main.m */; };
 		5F919283158B0D0600FCC748 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919282158B0D0600FCC748 /* AppDelegate.m */; };
-		5F919291158B0D4C00FCC748 /* SRAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919290158B0D4C00FCC748 /* SRAnimationView.m */; };
 		5F919294158B15AD00FCC748 /* SRTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919293158B15AD00FCC748 /* SRTViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184CE2E1158B834F003C2C83 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
+		184CE2E2158B834F003C2C83 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
+		184CE2E8158B86C6003C2C83 /* SRRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRefreshView.h; sourceTree = "<group>"; };
+		184CE2E9158B86C6003C2C83 /* SRRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRefreshView.m; sourceTree = "<group>"; };
+		184CE2EB158B874A003C2C83 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
+		184CE2ED158B9344003C2C83 /* SRDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
 		5F91926E158B0D0600FCC748 /* SlimeRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlimeRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F919272158B0D0600FCC748 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F919274158B0D0600FCC748 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -28,8 +37,7 @@
 		5F919280158B0D0600FCC748 /* SlimeRefresh-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SlimeRefresh-Prefix.pch"; sourceTree = "<group>"; };
 		5F919281158B0D0600FCC748 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5F919282158B0D0600FCC748 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5F91928F158B0D4C00FCC748 /* SRAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRAnimationView.h; sourceTree = "<group>"; };
-		5F919290158B0D4C00FCC748 /* SRAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRAnimationView.m; sourceTree = "<group>"; };
+		5F91928F158B0D4C00FCC748 /* SRSlimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRSlimeView.h; sourceTree = "<group>"; };
 		5F919292158B15AD00FCC748 /* SRTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTViewController.h; sourceTree = "<group>"; };
 		5F919293158B15AD00FCC748 /* SRTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,8 +110,13 @@
 		5F91928D158B0D2D00FCC748 /* SlimeRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				5F91928F158B0D4C00FCC748 /* SRAnimationView.h */,
-				5F919290158B0D4C00FCC748 /* SRAnimationView.m */,
+				184CE2E1158B834F003C2C83 /* sr_refresh.png */,
+				184CE2E2158B834F003C2C83 /* sr_refresh@2X.png */,
+				5F91928F158B0D4C00FCC748 /* SRSlimeView.h */,
+				184CE2EB158B874A003C2C83 /* SRSlimeView.m */,
+				184CE2E8158B86C6003C2C83 /* SRRefreshView.h */,
+				184CE2E9158B86C6003C2C83 /* SRRefreshView.m */,
+				184CE2ED158B9344003C2C83 /* SRDefine.h */,
 			);
 			path = SlimeRefresh;
 			sourceTree = "<group>";
@@ -160,6 +173,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F91927D158B0D0600FCC748 /* InfoPlist.strings in Resources */,
+				184CE2E3158B834F003C2C83 /* sr_refresh.png in Resources */,
+				184CE2E4158B834F003C2C83 /* sr_refresh@2X.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,8 +187,9 @@
 			files = (
 				5F91927F158B0D0600FCC748 /* main.m in Sources */,
 				5F919283158B0D0600FCC748 /* AppDelegate.m in Sources */,
-				5F919291158B0D4C00FCC748 /* SRAnimationView.m in Sources */,
 				5F919294158B15AD00FCC748 /* SRTViewController.m in Sources */,
+				184CE2EA158B86C6003C2C83 /* SRRefreshView.m in Sources */,
+				184CE2EC158B874A003C2C83 /* SRSlimeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +258,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SlimeRefresh/SlimeRefresh-Prefix.pch";
 				INFOPLIST_FILE = "SlimeRefresh/SlimeRefresh-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -253,6 +270,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SlimeRefresh/SlimeRefresh-Prefix.pch";
 				INFOPLIST_FILE = "SlimeRefresh/SlimeRefresh-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
