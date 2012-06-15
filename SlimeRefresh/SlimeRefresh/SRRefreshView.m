@@ -17,7 +17,6 @@
 @end
 
 @implementation SRRefreshView {
-    BOOL            _notSetFrame;
     SRSlimeView     *_slime;
     UIImageView     *_refleshView;
     UIActivityIndicatorView *_activityIndicatorView;
@@ -77,6 +76,8 @@
         [_activityIndicatorView stopAnimating];
         _slime.hidden = NO;
         _refleshView.hidden = NO;
+        _refleshView.bounds = CGRectMake(0.0f, 0.0f, kRefreshImageWidth,
+                                         kRefreshImageWidth);
     }
 }
 
@@ -115,31 +116,56 @@
 - (void)scrollViewDidEndDraging
 {
     if (_broken) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.2f];
-        _scrollView.contentInset = UIEdgeInsetsMake(32.0f, 0.0f, 0.0f, 0.0f);
-        CGRect rect = self.frame;
-        rect.origin.y = -32.0f;
-        rect.size.height = 32.0f;
-        self.frame = rect;
-        [UIView commitAnimations];
+        if (self.loading) {
+            [UIView transitionWithView:_scrollView
+                              duration:0.2
+                               options:UIViewAnimationCurveEaseOut
+                            animations:^{
+                                _scrollView.contentInset = UIEdgeInsetsMake(32.0f, 0.0f, 0.0f, 0.0f);
+                            } completion:^(BOOL finished) {
+                                self.broken = NO;
+                            }];
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:0.2f];
+            CGRect rect = self.frame;
+            rect.origin.y = -32.0f;
+            rect.size.height = 32.0f;
+            self.frame = rect;
+            [UIView commitAnimations];
+        }else {
+            [self performSelector:@selector(setBroken:)
+                       withObject:nil afterDelay:0.2];
+            self.loading = NO;
+        }
     }
 }
 
 - (void)endRefresh
 {
-    self.broken = NO;
-    self.loading = NO;
-    _slime.toPoint = _slime.startPoint;
-    _notSetFrame = YES;
-    [UIView transitionWithView:_scrollView
-                      duration:0.2f
-                       options:UIViewAnimationCurveEaseIn
-                    animations:^{
-                        _scrollView.contentInset = UIEdgeInsetsZero;
-                    } completion:^(BOOL finished) {
-                        _notSetFrame = NO;
-                    }];
+    if (self.loading) {
+        self.loading = NO;
+        _slime.toPoint = _slime.startPoint;
+        //_notSetFrame = YES;
+        [UIView transitionWithView:_scrollView
+                          duration:0.2f
+                           options:UIViewAnimationCurveEaseOut
+                        animations:^{
+                            _scrollView.contentInset = UIEdgeInsetsZero;
+                        } completion:^(BOOL finished) {
+                            //_notSetFrame = NO;
+                        }];
+    }
+}
+
+- (void)setBroken:(BOOL)broken
+{
+    if (_broken == broken) {
+        return;
+    }
+    _broken = broken;
+    if (!_broken) {
+        
+    }
 }
 
 @end

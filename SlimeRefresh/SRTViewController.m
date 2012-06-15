@@ -76,7 +76,8 @@
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
 {
     [_slimeView performSelector:@selector(endRefresh)
-                     withObject:nil afterDelay:5];
+                     withObject:nil afterDelay:1 
+                        inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
 }
 
 @end
