@@ -30,8 +30,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _slime = [[SRSlimeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, 16.0f)];
-        _slime.startPoint = _slime.toPoint = CGPointMake(frame.size.width / 2, 20.0f);
+        _slime = [[SRSlimeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
+        _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
         
         [self addSubview:_slime];
         
@@ -56,8 +56,9 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
+    NSLog(@"%f", frame.size.height);
     _slime.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
-    _slime.startPoint = _slime.toPoint = CGPointMake(frame.size.width / 2, 16.0f);
+    _slime.startPoint = CGPointMake(frame.size.width / 2, 16.0f);
     _refleshView.center = _slime.startPoint;
     _activityIndicatorView.center = _slime.startPoint;
 }
@@ -81,6 +82,14 @@
     }
 }
 
+- (void)didMoveToSuperview
+{
+    [super didMoveToSuperview];
+    CGRect rect = self.frame;
+    rect.origin.y = -rect.size.height;
+    self.frame = rect;
+}
+
 #pragma mark - action
 
 - (void)pullApart:(SRRefreshView*)refreshView
@@ -96,12 +105,13 @@
 - (void)scrollViewDidScroll
 {
     CGPoint p = _scrollView.contentOffset;
-    if (p.y < - 32.0f) {
-        CGRect rect = self.frame;
-        rect.size.height = -p.y;
-        rect.origin.y = p.y;
-        self.frame = rect;
+    if (p.y <= - 32.0f) {
         if (!_broken) {
+            CGRect rect = self.frame;
+            rect.origin.y = p.y;
+            if (p.y < -32.0f) rect.size.height = -p.y;
+            else rect.size.height = 32.0f;
+            self.frame = rect;
             float l = -(p.y + 32.0f);
             CGPoint ssp = _slime.startPoint;
             _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
@@ -110,6 +120,13 @@
             _refleshView.bounds = CGRectMake(0.0f, 0.0f, pf * kRefreshImageWidth,
                                              pf * kRefreshImageWidth);
         }
+    }else if (p.y < 0) {
+        CGRect rect = self.frame;
+        rect.origin.y = -32.0f;
+        if (p.y < -32.0f) rect.size.height = -p.y;
+        else rect.size.height = 32.0f;
+        self.frame = rect;
+        _slime.toPoint = _slime.startPoint;
     }
 }
 

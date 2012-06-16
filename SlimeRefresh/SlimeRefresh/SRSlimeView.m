@@ -58,7 +58,15 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 - (void)setStartPoint:(CGPoint)startPoint
 {
+    if (CGPointEqualToPoint(_startPoint, startPoint))return;
     _startPoint = startPoint;
+    [self setNeedsDisplay];
+}
+
+- (void)setToPoint:(CGPoint)toPoint
+{
+    if (CGPointEqualToPoint(_toPoint, toPoint))return;
+    _toPoint = toPoint;
     [self setNeedsDisplay];
 }
 
@@ -121,6 +129,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         [_bodyColor setFill];
         [_skinColor setStroke];
         CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(context, 1);
         //draw big cercle
 //        CGContextAddArc(context, _startPoint.x,
 //                        _startPoint.y, startRadius,
@@ -140,12 +149,6 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     }else {
         [_target performSelector:_action withObject:self];
     }
-}
-
-- (void)setToPoint:(CGPoint)toPoint
-{
-    _toPoint = toPoint;
-    [self setNeedsDisplay];
 }
 
 - (void)setPullApartTarget:(id)target action:(SEL)action
