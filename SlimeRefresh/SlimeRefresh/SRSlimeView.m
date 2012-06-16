@@ -58,14 +58,14 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 - (void)setStartPoint:(CGPoint)startPoint
 {
-    if (CGPointEqualToPoint(_startPoint, startPoint))return;
+    //if (CGPointEqualToPoint(_startPoint, startPoint))return;
     _startPoint = startPoint;
     [self setNeedsDisplay];
 }
 
 - (void)setToPoint:(CGPoint)toPoint
 {
-    if (CGPointEqualToPoint(_toPoint, toPoint))return;
+    //if (CGPointEqualToPoint(_toPoint, toPoint))return;
     _toPoint = toPoint;
     [self setNeedsDisplay];
 }
@@ -120,6 +120,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         CGContextRef context = UIGraphicsGetCurrentContext();
         [_bodyColor setFill];
         [_skinColor setStroke];
+        CGContextSetLineWidth(context, 1);
         CGContextAddArc(context, _startPoint.x,
                         _startPoint.y, _radius,
                         0, 2*M_PI, 1);

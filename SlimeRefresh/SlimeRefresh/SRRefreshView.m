@@ -56,7 +56,6 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    NSLog(@"%f", frame.size.height);
     _slime.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
     _slime.startPoint = CGPointMake(frame.size.width / 2, 16.0f);
     _refleshView.center = _slime.startPoint;
@@ -105,13 +104,17 @@
 - (void)scrollViewDidScroll
 {
     CGPoint p = _scrollView.contentOffset;
+    CGRect rect = self.frame;
+    if (p.y < -32.0f) {
+        rect.origin.y = p.y;
+        rect.size.height = -p.y;
+    }else {
+        rect.origin.y = -32.0f;
+        rect.size.height = 32.0f;
+    }
+    self.frame = rect;
     if (p.y <= - 32.0f) {
         if (!_broken) {
-            CGRect rect = self.frame;
-            rect.origin.y = p.y;
-            if (p.y < -32.0f) rect.size.height = -p.y;
-            else rect.size.height = 32.0f;
-            self.frame = rect;
             float l = -(p.y + 32.0f);
             CGPoint ssp = _slime.startPoint;
             _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
@@ -121,11 +124,6 @@
                                              pf * kRefreshImageWidth);
         }
     }else if (p.y < 0) {
-        CGRect rect = self.frame;
-        rect.origin.y = -32.0f;
-        if (p.y < -32.0f) rect.size.height = -p.y;
-        else rect.size.height = 32.0f;
-        self.frame = rect;
         _slime.toPoint = _slime.startPoint;
     }
 }
