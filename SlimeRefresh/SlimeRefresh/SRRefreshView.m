@@ -17,13 +17,12 @@
 @end
 
 @implementation SRRefreshView {
-    SRSlimeView     *_slime;
-    UIImageView     *_refleshView;
     UIActivityIndicatorView *_activityIndicatorView;
 }
 
 @synthesize delegate = _delegate, broken = _broken;
 @synthesize loading = _loading, scrollView = _scrollView;
+@synthesize slime = _slime, refleshView = _refleshView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -70,7 +69,7 @@
     _loading = loading;
     if (_loading) {
         [_activityIndicatorView startAnimating];
-        _slime.hidden = YES;
+        //_slime.hidden = YES;
         _refleshView.hidden = YES;
     }else {
         [_activityIndicatorView stopAnimating];
@@ -105,15 +104,13 @@
 {
     CGPoint p = _scrollView.contentOffset;
     CGRect rect = self.frame;
-    if (p.y < -32.0f) {
+    if (p.y <= - 32.0f) {
         rect.origin.y = p.y;
         rect.size.height = -p.y;
-    }else {
-        rect.origin.y = -32.0f;
-        rect.size.height = 32.0f;
-    }
-    self.frame = rect;
-    if (p.y <= - 32.0f) {
+        self.frame = rect;
+        if (!self.loading) {
+            [_slime setNeedsDisplay];
+        }
         if (!_broken) {
             float l = -(p.y + 32.0f);
             CGPoint ssp = _slime.startPoint;
@@ -124,6 +121,9 @@
                                              pf * kRefreshImageWidth);
         }
     }else if (p.y < 0) {
+        rect.origin.y = -32.0f;
+        rect.size.height = 32.0f;
+        self.frame = rect;
         _slime.toPoint = _slime.startPoint;
     }
 }

@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SRSlimeView.h"
 
 @protocol SRRefreshDelegate;
 
-@interface SRRefreshView : UIView
+@interface SRRefreshView : UIView{
+    UIImageView     *_refleshView;
+    SRSlimeView     *_slime;
+}
 
 @property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
 @property (nonatomic, assign)   BOOL    loading;
 @property (nonatomic, assign)   UIScrollView    *scrollView;
+@property (nonatomic, strong, readonly) SRSlimeView *slime;
+@property (nonatomic, strong, readonly) UIImageView *refleshView;
 
 - (void)scrollViewDidScroll;
 - (void)scrollViewDidEndDraging;

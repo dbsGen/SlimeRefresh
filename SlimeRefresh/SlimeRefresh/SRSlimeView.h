@@ -18,6 +18,8 @@
 @property (nonatomic, retain)   UIColor *bodyColor,
                                         *skinColor;
 
+@property (nonatomic, assign)   BOOL    missWhenApart;
+
 - (void)setPullApartTarget:(id)target action:(SEL)action;
 
 @end

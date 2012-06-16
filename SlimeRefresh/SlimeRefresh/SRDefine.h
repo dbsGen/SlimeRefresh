@@ -12,6 +12,6 @@
 #define kStartTo    0.7f
 #define kEndTo      0.15f
 
-#define kRefreshImageWidth  19.0f
+#define kRefreshImageWidth  17.0f
 
 #endif

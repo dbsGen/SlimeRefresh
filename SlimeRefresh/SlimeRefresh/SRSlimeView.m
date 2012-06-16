@@ -8,6 +8,7 @@
 
 #import "SRSlimeView.h"
 #import "SRDefine.h"
+#import <QuartzCore/QuartzCore.h>
 
 NS_INLINE CGFloat distansBetween(CGPoint p1 , CGPoint p2) {
     return sqrtf((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
@@ -29,6 +30,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 @synthesize viscous = _viscous, toPoint = _toPoint;
 @synthesize startPoint = _startPoint, skinColor = _skinColor;
 @synthesize bodyColor = _bodyColor, radius = _radius;
+@synthesize missWhenApart = _missWhenApart;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,6 +46,8 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         _radius = 13.0f;
         _bodyColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
         _skinColor = [UIColor colorWithWhite:0.8f alpha:0.9f];
+        
+        _missWhenApart = YES;
     }
     return self;
 }
@@ -58,14 +62,14 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 - (void)setStartPoint:(CGPoint)startPoint
 {
-    //if (CGPointEqualToPoint(_startPoint, startPoint))return;
+    if (CGPointEqualToPoint(_startPoint, startPoint))return;
     _startPoint = startPoint;
     [self setNeedsDisplay];
 }
 
 - (void)setToPoint:(CGPoint)toPoint
 {
-    //if (CGPointEqualToPoint(_toPoint, toPoint))return;
+    if (CGPointEqualToPoint(_toPoint, toPoint))return;
     _toPoint = toPoint;
     [self setNeedsDisplay];
 }
@@ -125,7 +129,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
                         _startPoint.y, _radius,
                         0, 2*M_PI, 1);
         CGContextDrawPath(context, kCGPathFillStroke);
-    }else if (progress > 0) {
+    }else {
         CGFloat startRadius = _radius * (kStartTo + (1-kStartTo)*progress);
         [_bodyColor setFill];
         [_skinColor setStroke];
@@ -147,8 +151,14 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         UIBezierPath *path = [self middlePath:startRadius end:endRadius];
         CGContextAddPath(context, path.CGPath);
         CGContextDrawPath(context, kCGPathFillStroke);
-    }else {
-        [_target performSelector:_action withObject:self];
+        if (progress <= 0) {
+            if (_missWhenApart) {
+                CATransition *animation = [CATransition animation];
+                self.hidden = YES;
+                [self.layer addAnimation:animation forKey:@""];
+            }
+            [_target performSelector:_action withObject:self];
+        }
     }
 }
 
