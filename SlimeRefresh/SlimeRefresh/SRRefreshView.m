@@ -157,15 +157,4 @@
     }
 }
 
-- (void)setBroken:(BOOL)broken
-{
-    if (_broken == broken) {
-        return;
-    }
-    _broken = broken;
-    if (!_broken) {
-        
-    }
-}
-
 @end
