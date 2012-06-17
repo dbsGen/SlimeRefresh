@@ -25,6 +25,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 @implementation SRSlimeView {
     __unsafe_unretained id  _target;
     SEL _action;
+    BOOL    _broken;
 }
 
 @synthesize viscous = _viscous, toPoint = _toPoint;
@@ -151,13 +152,16 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         UIBezierPath *path = [self middlePath:startRadius end:endRadius];
         CGContextAddPath(context, path.CGPath);
         CGContextDrawPath(context, kCGPathFillStroke);
-        if (progress <= 0) {
+        if (progress <= 0 && !_broken) {
+            _broken = YES;
             if (_missWhenApart) {
                 CATransition *animation = [CATransition animation];
                 self.hidden = YES;
                 [self.layer addAnimation:animation forKey:@""];
             }
             [_target performSelector:_action withObject:self];
+        }else {
+            _broken = NO;
         }
     }
 }
