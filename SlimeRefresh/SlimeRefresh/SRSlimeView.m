@@ -156,6 +156,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
             _broken = YES;
             if (_missWhenApart) {
                 CATransition *animation = [CATransition animation];
+                animation.duration = 0.1;
                 self.hidden = YES;
                 [self.layer addAnimation:animation forKey:@""];
             }
