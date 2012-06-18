@@ -9,6 +9,7 @@
 #import "SRRefreshView.h"
 #import "SRSlimeView.h"
 #import "SRDefine.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SRRefreshView()
 
