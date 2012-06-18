@@ -38,6 +38,7 @@
         _slimeView.delegate = self;
         _slimeView.scrollView = _scrollView;
         [_scrollView addSubview:_slimeView];
+        
     }
     return self;
 }

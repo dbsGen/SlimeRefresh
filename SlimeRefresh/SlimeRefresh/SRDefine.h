@@ -13,5 +13,6 @@
 #define kEndTo      0.15f
 
 #define kRefreshImageWidth  17.0f
+#define kAnimationInterval  (1.0f/30.0f)
 
 #endif

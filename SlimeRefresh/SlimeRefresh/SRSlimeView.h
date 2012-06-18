@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    SRSlimeTypeNormal,
+    SRSlimeTypeShortening,
+    SRSlimeTypeMiss
+} SRSlimeType;
+
 @class SRSlimeView;
 
 @interface SRSlimeView : UIView
@@ -19,6 +25,7 @@
                                         *skinColor;
 
 @property (nonatomic, assign)   BOOL    missWhenApart;
+@property (nonatomic, assign)   SRSlimeType type;
 
 - (void)setPullApartTarget:(id)target action:(SEL)action;
 

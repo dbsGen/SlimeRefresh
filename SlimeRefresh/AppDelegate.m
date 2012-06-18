@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "SRTViewController.h"
+#import "SRTestViewController.h"
 
 @implementation AppDelegate
 

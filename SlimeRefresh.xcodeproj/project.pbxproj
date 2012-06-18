@@ -12,6 +12,7 @@
 		184CE2EA158B86C6003C2C83 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2E9158B86C6003C2C83 /* SRRefreshView.m */; };
 		184CE2EC158B874A003C2C83 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2EB158B874A003C2C83 /* SRSlimeView.m */; };
 		18C0D463158C92F100B13C13 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18C0D462158C92F100B13C13 /* QuartzCore.framework */; };
+		5F0F7F95158EF77300736F4B /* SRTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0F7F94158EF77300736F4B /* SRTestViewController.m */; };
 		5F919273158B0D0600FCC748 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919272158B0D0600FCC748 /* UIKit.framework */; };
 		5F919275158B0D0600FCC748 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919274158B0D0600FCC748 /* Foundation.framework */; };
 		5F919277158B0D0600FCC748 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919276158B0D0600FCC748 /* CoreGraphics.framework */; };
@@ -29,6 +30,8 @@
 		184CE2EB158B874A003C2C83 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
 		184CE2ED158B9344003C2C83 /* SRDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
 		18C0D462158C92F100B13C13 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5F0F7F93158EF77300736F4B /* SRTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTestViewController.h; sourceTree = "<group>"; };
+		5F0F7F94158EF77300736F4B /* SRTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTestViewController.m; sourceTree = "<group>"; };
 		5F91926E158B0D0600FCC748 /* SlimeRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlimeRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F919272158B0D0600FCC748 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F919274158B0D0600FCC748 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -96,6 +99,8 @@
 				5F919279158B0D0600FCC748 /* Supporting Files */,
 				5F919292158B15AD00FCC748 /* SRTViewController.h */,
 				5F919293158B15AD00FCC748 /* SRTViewController.m */,
+				5F0F7F93158EF77300736F4B /* SRTestViewController.h */,
+				5F0F7F94158EF77300736F4B /* SRTestViewController.m */,
 			);
 			path = SlimeRefresh;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				5F919294158B15AD00FCC748 /* SRTViewController.m in Sources */,
 				184CE2EA158B86C6003C2C83 /* SRRefreshView.m in Sources */,
 				184CE2EC158B874A003C2C83 /* SRSlimeView.m in Sources */,
+				5F0F7F95158EF77300736F4B /* SRTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,14 +24,14 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 @implementation SRSlimeView {
     __unsafe_unretained id  _target;
-    SEL _action;
-    BOOL    _broken;
+    SEL     _action;
+    //CGPoint     _tempPoint;
 }
 
 @synthesize viscous = _viscous, toPoint = _toPoint;
 @synthesize startPoint = _startPoint, skinColor = _skinColor;
 @synthesize bodyColor = _bodyColor, radius = _radius;
-@synthesize missWhenApart = _missWhenApart;
+@synthesize missWhenApart = _missWhenApart, type = _type;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -65,6 +65,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 {
     if (CGPointEqualToPoint(_startPoint, startPoint))return;
     _startPoint = startPoint;
+    self.layer.anchorPoint = _startPoint;
     [self setNeedsDisplay];
 }
 
@@ -75,14 +76,16 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     [self setNeedsDisplay];
 }
 
-- (UIBezierPath*)middlePath:(CGFloat)startRadius end:(CGFloat)endRadius
+- (UIBezierPath*)bodyPath:(CGFloat)startRadius end:(CGFloat)endRadius percent:(float)percent
 {
     UIBezierPath *path = [[UIBezierPath alloc] init];
     
+    float angle1 = M_PI/3 + (M_PI / 6 /*M_PI/2 - M_PI/3*/) * percent;
+    
     CGPoint sp1 = pointLineToArc(_startPoint, _toPoint,
-                                 M_PI/3, startRadius),
+                                 angle1, startRadius),
             sp2 = pointLineToArc(_startPoint, _toPoint,
-                                 -M_PI/3, startRadius),
+                                 -angle1, startRadius),
             ep1 = pointLineToArc(_toPoint, _startPoint,
                                  M_PI/2, endRadius),
             ep2 = pointLineToArc(_toPoint, _startPoint,
@@ -91,7 +94,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     CGPoint mp1 = CGPointMake((sp2.x + ep1.x)/2, (sp2.y + ep1.y)/2),
             mp2 = CGPointMake((sp1.x + ep2.x)/2, (sp1.y + ep2.y)/2),
             mm = CGPointMake((mp1.x + mp2.x)/2, (mp1.y + mp2.y)/2);
-    float p = distansBetween(mp1, mp2) / 2 / endRadius;
+    float p = distansBetween(mp1, mp2) / 2 / endRadius * (0.9 + percent/10);
     mp1 = CGPointMake((mp1.x - mm.x)/p + mm.x, (mp1.y - mm.y)/p + mm.y);
     mp2 = CGPointMake((mp2.x - mm.x)/p + mm.x, (mp2.y - mm.y)/p + mm.y);
     
@@ -100,8 +103,8 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
                           _toPoint.x - _startPoint.x);
     [path addArcWithCenter:_startPoint
                     radius:startRadius
-                startAngle:angleS + M_PI/3
-                  endAngle:angleS + M_PI*5/3 
+                startAngle:angleS + angle1
+                  endAngle:angleS + M_PI*2 - angle1
                  clockwise:YES];
     [path addQuadCurveToPoint:ep1
                  controlPoint:mp1];
@@ -120,57 +123,71 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 - (void)drawRect:(CGRect)rect
 {
-    float progress = 1 - distansBetween(_startPoint , _toPoint) / _viscous;
-    if (progress == 1) {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        [_bodyColor setFill];
-        [_skinColor setStroke];
-        CGContextSetLineWidth(context, 1);
-        CGContextAddArc(context, _startPoint.x,
-                        _startPoint.y, _radius,
-                        0, 2*M_PI, 1);
-        CGContextDrawPath(context, kCGPathFillStroke);
-    }else {
-        CGFloat startRadius = _radius * (kStartTo + (1-kStartTo)*progress);
-        [_bodyColor setFill];
-        [_skinColor setStroke];
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 1);
-        //draw big cercle
-//        CGContextAddArc(context, _startPoint.x,
-//                        _startPoint.y, startRadius,
-//                        0, 2*M_PI, 1);
-//        CGContextDrawPath(context, kCGPathFill);
-        
-        CGFloat endRadius = _radius * (kEndTo + (1-kEndTo)*progress);
-        //draw small cercle
-//        CGContextAddArc(context, _toPoint.x,
-//                        _toPoint.y, endRadius,
-//                        0, 2*M_PI, 1);
-//        CGContextDrawPath(context, kCGPathFill);
-        
-        UIBezierPath *path = [self middlePath:startRadius end:endRadius];
-        CGContextAddPath(context, path.CGPath);
-        CGContextDrawPath(context, kCGPathFillStroke);
-        if (progress <= 0 && !_broken) {
-            _broken = YES;
-            if (_missWhenApart) {
-                CATransition *animation = [CATransition animation];
-                animation.duration = 0.1;
-                self.hidden = YES;
-                [self.layer addAnimation:animation forKey:@""];
+    float percent = 1 - distansBetween(_startPoint , _toPoint) / _viscous;
+    switch (_type) {
+        case SRSlimeTypeNormal:
+            if (percent == 1) {
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                [_bodyColor setFill];
+                [_skinColor setStroke];
+                CGContextSetLineWidth(context, 2);
+                CGContextAddArc(context, _startPoint.x,
+                                _startPoint.y, _radius,
+                                0, 2*M_PI, 1);
+                CGContextDrawPath(context, kCGPathFillStroke);
+            }else {
+                CGFloat startRadius = _radius * (kStartTo + (1-kStartTo)*percent);
+                [_bodyColor setFill];
+                [_skinColor setStroke];
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                
+                CGFloat endRadius = _radius * (kEndTo + (1-kEndTo)*percent);
+                UIBezierPath *path = [self bodyPath:startRadius
+                                                end:endRadius
+                                            percent:percent];
+                CGContextSetLineWidth(context, 2);
+                CGContextAddPath(context, path.CGPath);
+                CGContextDrawPath(context, kCGPathFillStroke);
+                if (percent <= 0) {
+                    _type = SRSlimeTypeShortening;
+                    [_target performSelector:_action
+                                  withObject:self];
+                    [self performSelector:@selector(scaling)
+                               withObject:nil
+                               afterDelay:kAnimationInterval];
+                }
             }
-            [_target performSelector:_action withObject:self];
-        }else {
-            _broken = NO;
-        }
+            break;
+            
+        default:
+            break;
     }
+}
+
+- (void)scaling
+{
+    self.toPoint = CGPointMake((_toPoint.x + _startPoint.x)*0.9,
+                               (_toPoint.y + _startPoint.y)*0.9);
+    float p = distansBetween(_startPoint, _toPoint) / _viscous;
+    self.layer.transform = CATransform3DMakeScale(p, p, 1);
+    
+    [self performSelector:@selector(scaling)
+               withObject:nil
+               afterDelay:kAnimationInterval];
 }
 
 - (void)setPullApartTarget:(id)target action:(SEL)action
 {
     _target = target;
     _action = action;
+}
+
+- (void)setHidden:(BOOL)hidden
+{
+    [super setHidden:hidden];
+    if (!hidden) {
+        self.layer.transform = CATransform3DMakeScale(1, 1, 1);
+    }
 }
 
 @end
