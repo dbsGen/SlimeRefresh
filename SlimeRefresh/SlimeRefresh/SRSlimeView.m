@@ -236,4 +236,12 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     }
 }
 
+- (void)setState:(SRSlimeState)state
+{
+    _state = state;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(scaling)
+                                               object:nil];
+}
+
 @end
