@@ -31,7 +31,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 @synthesize viscous = _viscous, toPoint = _toPoint;
 @synthesize startPoint = _startPoint, skinColor = _skinColor;
 @synthesize bodyColor = _bodyColor, radius = _radius;
-@synthesize missWhenApart = _missWhenApart, type = _type;
+@synthesize missWhenApart = _missWhenApart, state = _state;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -45,7 +45,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
                                              frame.size.height / 2);
         _viscous = 55.0f;
         _radius = 13.0f;
-        _bodyColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
+        _bodyColor = [UIColor blackColor];
         _skinColor = [UIColor colorWithWhite:0.8f alpha:0.9f];
         
         _missWhenApart = YES;
@@ -65,15 +65,18 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 {
     if (CGPointEqualToPoint(_startPoint, startPoint))return;
     _startPoint = startPoint;
-    self.layer.anchorPoint = _startPoint;
-    [self setNeedsDisplay];
+    if (_state == SRSlimeStateNormal) {
+        [self setNeedsDisplay];
+    }
 }
 
 - (void)setToPoint:(CGPoint)toPoint
 {
     if (CGPointEqualToPoint(_toPoint, toPoint))return;
     _toPoint = toPoint;
-    [self setNeedsDisplay];
+    if (_state == SRSlimeStateNormal) {
+        [self setNeedsDisplay];
+    }
 }
 
 - (UIBezierPath*)bodyPath:(CGFloat)startRadius end:(CGFloat)endRadius percent:(float)percent
@@ -123,9 +126,10 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 - (void)drawRect:(CGRect)rect
 {
-    float percent = 1 - distansBetween(_startPoint , _toPoint) / _viscous;
-    switch (_type) {
-        case SRSlimeTypeNormal:
+    switch (_state) {
+        case SRSlimeStateNormal:
+        {
+            float percent = 1 - distansBetween(_startPoint , _toPoint) / _viscous;
             if (percent == 1) {
                 CGContextRef context = UIGraphicsGetCurrentContext();
                 [_bodyColor setFill];
@@ -149,16 +153,44 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
                 CGContextAddPath(context, path.CGPath);
                 CGContextDrawPath(context, kCGPathFillStroke);
                 if (percent <= 0) {
-                    _type = SRSlimeTypeShortening;
+                    _state = SRSlimeStateShortening;
                     [_target performSelector:_action
                                   withObject:self];
                     [self performSelector:@selector(scaling)
                                withObject:nil
-                               afterDelay:kAnimationInterval];
+                               afterDelay:kAnimationInterval
+                                  inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
                 }
             }
+        }
             break;
+        case SRSlimeStateShortening:
+        {
+            self.toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.8 + _startPoint.x,
+                                       (_toPoint.y - _startPoint.y)*0.8 + _startPoint.y);
+            float p = distansBetween(_startPoint, _toPoint) / _viscous;
+            float percent =1 -p;
+            float r = _radius * p;
             
+            if (p > 0.01) {
+                CGFloat startRadius = r * (kStartTo + (1-kStartTo)*percent);
+                [_bodyColor setFill];
+                [_skinColor setStroke];
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                
+                CGFloat endRadius = r * (kEndTo + (1-kEndTo)*percent) * (1+percent / 2);
+                UIBezierPath *path = [self bodyPath:startRadius
+                                                end:endRadius
+                                            percent:percent];
+                CGContextSetLineWidth(context, 2);
+                CGContextAddPath(context, path.CGPath);
+                CGContextDrawPath(context, kCGPathFillStroke);
+            }else {
+                self.hidden = YES;
+                _state = SRSlimeStateMiss;
+            }
+        }
+            break;
         default:
             break;
     }
@@ -166,14 +198,27 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 
 - (void)scaling
 {
-    self.toPoint = CGPointMake((_toPoint.x + _startPoint.x)*0.9,
-                               (_toPoint.y + _startPoint.y)*0.9);
-    float p = distansBetween(_startPoint, _toPoint) / _viscous;
-    self.layer.transform = CATransform3DMakeScale(p, p, 1);
-    
-    [self performSelector:@selector(scaling)
-               withObject:nil
-               afterDelay:kAnimationInterval];
+    if (_state == SRSlimeStateShortening) {
+//        self.toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.9 + _startPoint.x,
+//                                   (_toPoint.y - _startPoint.y)*0.9 + _startPoint.y);
+//        float p = distansBetween(_startPoint, _toPoint) / _viscous;
+//        self.layer.transform = CATransform3DMakeScale(p, p, 1);
+//        
+//        if (p > 0.01) {
+//            [self performSelector:@selector(scaling)
+//                       withObject:nil
+//                       afterDelay:kAnimationInterval
+//                          inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+//        }else {
+//            self.hidden = YES;
+//            _state = SRSlimeStateMiss;
+//        }
+        [self setNeedsDisplay];
+        [self performSelector:@selector(scaling)
+                       withObject:nil
+                       afterDelay:kAnimationInterval
+                          inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+    }
 }
 
 - (void)setPullApartTarget:(id)target action:(SEL)action
@@ -186,7 +231,8 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 {
     [super setHidden:hidden];
     if (!hidden) {
-        self.layer.transform = CATransform3DMakeScale(1, 1, 1);
+        self.layer.transform = CATransform3DIdentity;
+        [self setNeedsDisplay];
     }
 }
 

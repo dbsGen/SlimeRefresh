@@ -55,7 +55,7 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    if (_slime.type == SRSlimeTypeNormal) {
+    if (_slime.state == SRSlimeStateNormal) {
         _slime.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
         _slime.startPoint = CGPointMake(frame.size.width / 2, 16.0f);
     }
@@ -72,19 +72,22 @@
     if (_loading) {
         [_activityIndicatorView startAnimating];
         CAKeyframeAnimation *aniamtion = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+        
         aniamtion.values = [NSArray arrayWithObjects:
-                            [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.01, 0.01, 1)],
-                            [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1)],
+                            [NSValue valueWithCATransform3D:
+                             CATransform3DMakeScale(0.01, 0.01, 1)],
+                            [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.4, 1.4, 1)],
                             [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)],nil];
         aniamtion.keyTimes = [NSArray arrayWithObjects:
                               [NSNumber numberWithFloat:0],
-                              [NSNumber numberWithFloat:0.6],
+                              [NSNumber numberWithFloat:0.3],
                               [NSNumber numberWithFloat:1], nil];
         aniamtion.timingFunctions = [NSArray arrayWithObjects:
                                      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut],
                                      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut],
                                       nil];
-        aniamtion.duration = 0.5;
+        aniamtion.duration = 0.6;
+        
         [_activityIndicatorView.layer addAnimation:aniamtion
                                             forKey:@""];
         //_slime.hidden = YES;
@@ -175,6 +178,7 @@
     if (self.loading) {
         self.loading = NO;
         _slime.toPoint = _slime.startPoint;
+        _slime.state = SRSlimeStateNormal;
         //_notSetFrame = YES;
         [UIView transitionWithView:_scrollView
                           duration:0.2f

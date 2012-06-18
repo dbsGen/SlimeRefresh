@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    SRSlimeTypeNormal,
-    SRSlimeTypeShortening,
-    SRSlimeTypeMiss
-} SRSlimeType;
+    SRSlimeStateNormal,
+    SRSlimeStateShortening,
+    SRSlimeStateMiss
+} SRSlimeState;
 
 @class SRSlimeView;
 
@@ -25,7 +25,7 @@ typedef enum {
                                         *skinColor;
 
 @property (nonatomic, assign)   BOOL    missWhenApart;
-@property (nonatomic, assign)   SRSlimeType type;
+@property (nonatomic, assign)   SRSlimeState    state;
 
 - (void)setPullApartTarget:(id)target action:(SEL)action;
 
