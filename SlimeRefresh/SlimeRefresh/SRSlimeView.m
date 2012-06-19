@@ -64,8 +64,8 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 - (void)setStartPoint:(CGPoint)startPoint
 {
     if (CGPointEqualToPoint(_startPoint, startPoint))return;
-    _startPoint = startPoint;
     if (_state == SRSlimeStateNormal) {
+        _startPoint = startPoint;
         [self setNeedsDisplay];
     }
 }
@@ -73,8 +73,8 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 - (void)setToPoint:(CGPoint)toPoint
 {
     if (CGPointEqualToPoint(_toPoint, toPoint))return;
-    _toPoint = toPoint;
     if (_state == SRSlimeStateNormal) {
+        _toPoint = toPoint;
         [self setNeedsDisplay];
     }
 }
@@ -166,7 +166,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
             break;
         case SRSlimeStateShortening:
         {
-            self.toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.8 + _startPoint.x,
+            _toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.8 + _startPoint.x,
                                        (_toPoint.y - _startPoint.y)*0.8 + _startPoint.y);
             float p = distansBetween(_startPoint, _toPoint) / _viscous;
             float percent =1 -p;
