@@ -2,12 +2,18 @@
 //  SRRefreshView.h
 //  SlimeRefresh
 //
+//  A refresh view looks like UIRefreshControl
+//
 //  Created by apple on 12-6-15.
 //  Copyright (c) 2012年 zrz. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "SRSlimeView.h"
+
+@class SRRefreshView;
+
+typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 
 @protocol SRRefreshDelegate;
 
@@ -16,20 +22,29 @@
     SRSlimeView     *_slime;
 }
 
-@property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
+//set the state loading or not.
 @property (nonatomic, assign)   BOOL    loading;
-@property (nonatomic, assign)   UIScrollView    *scrollView;
+//set the slime's style by this property.
 @property (nonatomic, strong, readonly) SRSlimeView *slime;
+//set your refresh icon.
 @property (nonatomic, strong, readonly) UIImageView *refleshView;
+//select one to receive the refreshing message.
+@property (nonatomic, copy)     SRRefreshBlock  block;
+@property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
 
+//
 - (void)scrollViewDidScroll;
 - (void)scrollViewDidEndDraging;
+
+//
 - (void)endRefresh;
 
 @end
 
 @protocol SRRefreshDelegate <NSObject>
 
+@optional
+//start refresh.
 - (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView;
 
 @end
