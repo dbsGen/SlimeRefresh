@@ -36,7 +36,7 @@
         
         _slimeView = [[SRRefreshView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
         _slimeView.delegate = self;
-        _slimeView.scrollView = _scrollView;
+        _slimeView.upInset = 20;
         [_scrollView addSubview:_slimeView];
         
     }

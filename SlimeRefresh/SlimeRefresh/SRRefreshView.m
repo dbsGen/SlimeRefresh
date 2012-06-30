@@ -25,7 +25,7 @@
 @synthesize delegate = _delegate, broken = _broken;
 @synthesize loading = _loading, scrollView = _scrollView;
 @synthesize slime = _slime, refleshView = _refleshView;
-@synthesize block = _block;
+@synthesize block = _block, upInset = _upInset;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -55,6 +55,8 @@
     return self;
 }
 
+#pragma mark - setters
+
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
@@ -64,6 +66,11 @@
     }
     _refleshView.center = _slime.startPoint;
     _activityIndicatorView.center = _slime.startPoint;
+}
+
+- (void)setUpInset:(CGFloat)upInset
+{
+    _upInset = upInset;
 }
 
 - (void)setLoading:(BOOL)loading
@@ -106,7 +113,9 @@
                           duration:0.3f
                            options:UIViewAnimationCurveEaseOut
                         animations:^{
-                            _scrollView.contentInset = UIEdgeInsetsZero;
+                            UIEdgeInsets inset = _scrollView.contentInset;
+                            inset.top = _upInset;
+                            _scrollView.contentInset = inset;
                         } completion:^(BOOL finished) {
                             //_notSetFrame = NO;
                         }];
@@ -122,6 +131,10 @@
         CGRect rect = self.frame;
         rect.origin.y = -rect.size.height;
         self.frame = rect;
+        
+        UIEdgeInsets inset = self.scrollView.contentInset;
+        inset.top = _upInset;
+        self.scrollView.contentInset = inset;
     }
 }
 
@@ -174,7 +187,9 @@
                               duration:0.2
                                options:UIViewAnimationCurveEaseOut
                             animations:^{
-                                _scrollView.contentInset = UIEdgeInsetsMake(32.0f, 0.0f, 0.0f, 0.0f);
+                                UIEdgeInsets inset = _scrollView.contentInset;
+                                inset.top = _upInset + 32.0f;
+                                _scrollView.contentInset = inset;
                             } completion:^(BOOL finished) {
                                 self.broken = NO;
                             }];
