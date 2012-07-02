@@ -10,13 +10,13 @@
 #import "SRRefreshView.h"
 
 @interface SRTViewController ()
-<UIScrollViewDelegate, SRRefreshDelegate>
+<UITableViewDelegate, SRRefreshDelegate>
 
 @end
 
 @implementation SRTViewController {
     SRRefreshView   *_slimeView;
-    UIScrollView    *_scrollView;
+    UITableView     *_tableView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -25,19 +25,33 @@
     if (self) {
         // Custom initialization
         CGRect bounds = self.view.bounds;
-        _scrollView = [[UIScrollView alloc] initWithFrame:bounds];
+        _tableView = [[UITableView alloc] initWithFrame:bounds];
         bounds.size.height += 1;
-        _scrollView.contentSize = bounds.size;
-        _scrollView.delegate = self;
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-        view.backgroundColor = [UIColor redColor];
-        [_scrollView addSubview:view];
-        [self.view addSubview:_scrollView];
+        _tableView.contentSize = bounds.size;
+        _tableView.delegate = self;
+        [self.view addSubview:_tableView];
         
-        _slimeView = [[SRRefreshView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+        UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+        titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        titleLabel.text = @"SlimeRefresh";
+        titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.shadowColor = [UIColor blackColor];
+        titleLabel.shadowOffset = CGSizeMake(0, 1);
+        titleLabel.textAlignment = UITextAlignmentCenter;
+        UIBarButtonItem *titleItem = [[UIBarButtonItem alloc] initWithCustomView:titleLabel];
+        UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                               target:nil action:nil];
+        
+        toolBar.items = [NSArray arrayWithObjects:space, titleItem, space, nil];
+        [self.view addSubview:toolBar];
+        
+        _slimeView = [[SRRefreshView alloc] init];
         _slimeView.delegate = self;
-        _slimeView.upInset = 20;
-        [_scrollView addSubview:_slimeView];
+        _slimeView.upInset = 44;
+        
+        [_tableView addSubview:_slimeView];
         
     }
     return self;

@@ -71,6 +71,10 @@
 - (void)setUpInset:(CGFloat)upInset
 {
     _upInset = upInset;
+    UIEdgeInsets inset = _scrollView.contentInset;
+    inset.top = _upInset;
+    _scrollView.contentInset = inset;
+    
 }
 
 - (void)setLoading:(BOOL)loading
@@ -130,6 +134,7 @@
         self.scrollView = (id)[self superview];
         CGRect rect = self.frame;
         rect.origin.y = -rect.size.height;
+        rect.size.width = _scrollView.frame.size.width;
         self.frame = rect;
         
         UIEdgeInsets inset = self.scrollView.contentInset;
@@ -157,15 +162,15 @@
 {
     CGPoint p = _scrollView.contentOffset;
     CGRect rect = self.frame;
-    if (p.y <= - 32.0f) {
-        rect.origin.y = p.y;
+    if (p.y <= - 32.0f - _upInset) {
+        rect.origin.y = p.y + _upInset;
         rect.size.height = -p.y;
         self.frame = rect;
         if (!self.loading) {
             [_slime setNeedsDisplay];
         }
         if (!_broken) {
-            float l = -(p.y + 32.0f);
+            float l = -(p.y + 32.0f + _upInset);
             CGPoint ssp = _slime.startPoint;
             _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
             CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
@@ -175,6 +180,7 @@
         rect.origin.y = -32.0f;
         rect.size.height = 32.0f;
         self.frame = rect;
+        [_slime setNeedsDisplay];
         _slime.toPoint = _slime.startPoint;
     }
 }
@@ -195,10 +201,6 @@
                             }];
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.2f];
-            CGRect rect = self.frame;
-            rect.origin.y = -32.0f;
-            rect.size.height = 32.0f;
-            self.frame = rect;
             [UIView commitAnimations];
         }else {
             [self performSelector:@selector(setBroken:)
