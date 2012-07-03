@@ -26,6 +26,7 @@ A protocol and a block, choise one.
     - (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView;
     
 Only one protocol, you have to implement. it will be called when the refreshing will be executed.
+
 and there is the other way:
 
     @property (nonatomic, copy)     SRRefreshBlock  block;
