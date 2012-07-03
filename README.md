@@ -27,7 +27,7 @@ A protocol and a block, choise one.
     
 Only one protocol, you have to implement. it will be called when the refreshing will be executed.
 
-and there is the other way:
+and here is the other way:
 
     @property (nonatomic, copy)     SRRefreshBlock  block;
     
