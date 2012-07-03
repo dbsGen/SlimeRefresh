@@ -18,8 +18,10 @@ How to use?
 
 4,init SRRefreshView and add it to a UIScrollView.
 
-Protocol 
+Callback 
 ==================================================
+
+A protocol and a block, choise one.
 
     - (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView;
     
@@ -34,6 +36,7 @@ as you see there is a block to receive the refresh event.just like:
     [refreshView setBlock:^(SRRefreshView* sender) { 
         [this load];    //replace this line to your refreshing code.
     }];
+
 
 Style
 ==================================================
