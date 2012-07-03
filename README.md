@@ -42,4 +42,4 @@ Up inset
 
 Some time you maybe want to add the ``` SRRefreshView ``` to a ``` UIScrollView ``` which 
 
-have setted the ``` contentInset ```. At this time you will set the ``` upInset ``` 
+have setted the ``` contentInset ```. At this time you will set the ``` upInset ``` (unfinish)
