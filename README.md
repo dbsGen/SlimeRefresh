@@ -24,6 +24,16 @@ Protocol
     - (void)slimeRefreshStartRefresh:(SRRefreshView*)refreshView;
     
 Only one protocol, you have to implement. it will be called when the refreshing will be executed.
+and there is the other way:
+
+    @property (nonatomic, copy)     SRRefreshBlock  block;
+    
+as you see there is a block to receive the refresh event.just like:
+
+    __block typeof(self) this = self;
+    [refreshView setBlock:^(SRRefreshView* sender) { 
+        [this load];    //replace this line to your refreshing code.
+    }];
 
 Style
 ==================================================
@@ -42,4 +52,16 @@ Up inset
 
 Some time you maybe want to add the ``` SRRefreshView ``` to a ``` UIScrollView ``` which 
 
-have setted the ``` contentInset ```. At this time you will set the ``` upInset ``` (unfinish)
+have setted the ``` contentInset ```. At this time you will set the ``` upInset ``` , you 
+
+just need to set the top.
+
+Action
+==================================================
+
+- call ``` scrollViewDidScroll ``` in the protocol ``` scrollViewDidScroll: ``` of ``` UIScrollViewDelegate ```.
+- call ```  scrollViewDidEndDraging ``` in the ``` scrollViewDidEndDragging:willDecelerate: ```.
+- and if the refresh loading over you will call ``` endRefresh ```.
+
+
+Ok, that is all. Enjoy it, and this is my blog:http://zhaorenzhi.cn.
