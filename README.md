@@ -1,7 +1,7 @@
 SlimeRefresh
 =================================================
 
-A lovely refresh style looks like ``` UIRefreshControl ```. It's looks like the Slime so I named it SlimeRefresh.
+A lovely refreshing style looks like ``` UIRefreshControl ```. It's looks like the Slime so I named it SlimeRefresh.
 
 Screenshot:
 
