@@ -5,7 +5,10 @@ A lovely refreshing style looks like ``` UIRefreshControl ```. It's looks like t
 
 Screenshot:
 
-![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/06/687474703a2f2f7777772e73637461622e636f6d3a383038302f6674702f73637265656e73686f74312e706e67.png)
+![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot1.png)
+![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot2.png)
+![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot3.png)
+![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot4.png)
 
 How to use?
 ==================================================
