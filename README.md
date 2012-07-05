@@ -21,6 +21,12 @@ How to use?
 
 4,init SRRefreshView and add it to a UIScrollView.
 
+just like:
+
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        [_tableView addSubview:_slimeView];
+
 Callback 
 ==================================================
 
