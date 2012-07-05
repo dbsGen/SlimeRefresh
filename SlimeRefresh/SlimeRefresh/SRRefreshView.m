@@ -176,12 +176,14 @@
             CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
             _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
         }
+        if (self.alpha != 1.0f) self.alpha = 1.0f;
     }else if (p.y < 0) {
         rect.origin.y = -32.0f;
         rect.size.height = 32.0f;
         self.frame = rect;
         [_slime setNeedsDisplay];
         _slime.toPoint = _slime.startPoint;
+        self.alpha = -(p.y + _upInset) / 32.0f;
     }
 }
 
