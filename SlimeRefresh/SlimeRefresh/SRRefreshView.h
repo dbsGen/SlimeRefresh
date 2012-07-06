@@ -4,7 +4,7 @@
 //
 //  A refresh view looks like UIRefreshControl
 //
-//  Created by apple on 12-6-15.
+//  Created by zrz on 12-6-15.
 //  Copyright (c) 2012年 zrz. All rights reserved.
 //
 
