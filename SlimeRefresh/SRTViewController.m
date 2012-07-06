@@ -32,6 +32,8 @@
         [self.view addSubview:_tableView];
         
         UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+
+        toolBar.barStyle = UIBarStyleBlackTranslucent;
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
         titleLabel.font = [UIFont boldSystemFontOfSize:20];
         titleLabel.text = @"SlimeRefresh";
@@ -50,6 +52,7 @@
         _slimeView = [[SRRefreshView alloc] init];
         _slimeView.delegate = self;
         _slimeView.upInset = 44;
+        _slimeView.slimeMissWhenGoingBack = YES;
         
         [_tableView addSubview:_slimeView];
         

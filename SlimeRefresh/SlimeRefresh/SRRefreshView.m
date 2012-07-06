@@ -83,6 +83,9 @@
     _slimeMissWhenGoingBack = slimeMissWhenGoingBack;
     if (!slimeMissWhenGoingBack) {
         _slime.alpha = 1;
+    }else {
+        CGPoint p = _scrollView.contentOffset;
+        self.alpha = -(p.y + _upInset) / 32.0f;
     }
 }
 
@@ -188,7 +191,7 @@
             _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
         }
         if (self.alpha != 1.0f) self.alpha = 1.0f;
-    }else if (p.y < 0) {
+    }else if (p.y < -_upInset) {
         rect.origin.y = -32.0f;
         rect.size.height = 32.0f;
         self.frame = rect;
