@@ -25,7 +25,6 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 @implementation SRSlimeView {
     __unsafe_unretained id  _target;
     SEL     _action;
-    //CGPoint     _tempPoint;
 }
 
 @synthesize viscous = _viscous, toPoint = _toPoint;
@@ -37,7 +36,6 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
         
         self.backgroundColor = [UIColor clearColor];
         
@@ -53,6 +51,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     return self;
 }
 
+// ==== not need
 //- (void)setFrame:(CGRect)frame
 //{
 //    [super setFrame:frame];

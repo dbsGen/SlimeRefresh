@@ -32,6 +32,8 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 @property (nonatomic, copy)     SRRefreshBlock  block;
 @property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
 
+@property (nonatomic, assign)   BOOL    slimeMissWhenGoingBack;
+
 // 
 @property (nonatomic, assign)   CGFloat upInset;
 

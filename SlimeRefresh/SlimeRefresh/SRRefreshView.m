@@ -26,12 +26,12 @@
 @synthesize loading = _loading, scrollView = _scrollView;
 @synthesize slime = _slime, refleshView = _refleshView;
 @synthesize block = _block, upInset = _upInset;
+@synthesize slimeMissWhenGoingBack = _slimeMissWhenGoingBack;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
         _slime = [[SRSlimeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
         _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
         
@@ -75,6 +75,14 @@
     inset.top = _upInset;
     _scrollView.contentInset = inset;
     
+}
+
+- (void)setSlimeMissWhenGoingBack:(BOOL)slimeMissWhenGoingBack
+{
+    _slimeMissWhenGoingBack = slimeMissWhenGoingBack;
+    if (!slimeMissWhenGoingBack) {
+        _slime.alpha = 1;
+    }
 }
 
 - (void)setLoading:(BOOL)loading
@@ -183,7 +191,7 @@
         self.frame = rect;
         [_slime setNeedsDisplay];
         _slime.toPoint = _slime.startPoint;
-        self.alpha = -(p.y + _upInset) / 32.0f;
+        if (_slimeMissWhenGoingBack) self.alpha = -(p.y + _upInset) / 32.0f;
     }
 }
 
