@@ -32,6 +32,8 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 @property (nonatomic, copy)     SRRefreshBlock  block;
 @property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
 
+//default is false, if true when slime go back it will have a alpha effect 
+//to go to miss.
 @property (nonatomic, assign)   BOOL    slimeMissWhenGoingBack;
 
 // 
@@ -41,7 +43,7 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 - (void)scrollViewDidScroll;
 - (void)scrollViewDidEndDraging;
 
-//
+//as the name, called when loading over.
 - (void)endRefresh;
 
 @end
