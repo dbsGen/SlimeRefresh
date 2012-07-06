@@ -32,7 +32,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _slime = [[SRSlimeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
+        _slime = [[SRSlimeView alloc] initWithFrame:
+                  CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
         _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
         
         [self addSubview:_slime];
@@ -106,8 +107,10 @@
                               [NSNumber numberWithFloat:0.6],
                               [NSNumber numberWithFloat:1], nil];
         aniamtion.timingFunctions = [NSArray arrayWithObjects:
-                                     [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut],
-                                     [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut],
+                                     [CAMediaTimingFunction functionWithName:
+                                      kCAMediaTimingFunctionEaseInEaseOut],
+                                     [CAMediaTimingFunction functionWithName:
+                                      kCAMediaTimingFunctionEaseInEaseOut],
                                       nil];
         aniamtion.duration = 0.7;
         _activityIndicatorView.layer.transform = CATransform3DIdentity;
@@ -228,19 +231,25 @@
         [UIView transitionWithView:_activityIndicatorView
                           duration:0.3f
                            options:UIViewAnimationCurveEaseIn
-                        animations:^{
-                            _activityIndicatorView.layer.transform = CATransform3DRotate(CATransform3DMakeScale(0.01f, 0.01f, 0.1f),
-                                                                                         -M_PI, 0, 0, 1);
-                        } completion:^(BOOL finished) {
-                            self.loading = NO;
-                            _slime.state = SRSlimeStateNormal;
-                            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-                            animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.1, 0.1, 1)];
-                            animation.toValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-                            animation.duration = 0.2f;
-                            [_slime.layer addAnimation:animation
-                                                forKey:@""];
-                        }];
+                        animations:^
+        {
+            _activityIndicatorView.layer.transform = CATransform3DRotate(
+                 CATransform3DMakeScale(0.01f, 0.01f, 0.1f), -M_PI, 0, 0, 1);
+        } completion:^(BOOL finished) 
+         {
+             self.loading = NO;
+             _slime.state = SRSlimeStateNormal;
+             //some bug here.
+//             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:
+//                                            @"transform"];
+//             animation.fromValue = [NSValue valueWithCATransform3D:
+//                                    CATransform3DMakeScale(0.1, 0.1, 1)];
+//             animation.toValue = [NSValue valueWithCATransform3D:
+//                                  CATransform3DIdentity];
+//             animation.duration = 0.2f;
+//             [_slime.layer addAnimation:animation
+//                                 forKey:@""];
+         }];
     }
 }
 
