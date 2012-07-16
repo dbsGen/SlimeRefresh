@@ -134,6 +134,9 @@
                             UIEdgeInsets inset = _scrollView.contentInset;
                             inset.top = _upInset;
                             _scrollView.contentInset = inset;
+                            if (_scrollView.contentOffset.y == -_upInset) {
+                                self.alpha = 0.0f;
+                            }
                         } completion:^(BOOL finished) {
                             //_notSetFrame = NO;
                         }];
