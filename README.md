@@ -44,7 +44,7 @@ and here is the other way:
     
 as you see there is a block to receive the refresh event.just like:
 
-    __block typeof(self) this = self;
+    __block __unsafe_unretained id this = self;
     [refreshView setBlock:^(SRRefreshView* sender) { 
         [this load];    //replace this line to your refreshing code.
     }];
