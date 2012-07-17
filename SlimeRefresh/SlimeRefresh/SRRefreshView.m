@@ -34,9 +34,10 @@
     if (self) {
         _slime = [[SRSlimeView alloc] initWithFrame:
                   CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
-        _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
+        _slime.toPoint = _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
         
         [self addSubview:_slime];
+        
         
         _refleshView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sr_refresh"]];
         _refleshView.center = _slime.startPoint;
@@ -134,7 +135,8 @@
                             UIEdgeInsets inset = _scrollView.contentInset;
                             inset.top = _upInset;
                             _scrollView.contentInset = inset;
-                            if (_scrollView.contentOffset.y == -_upInset) {
+                            if (_scrollView.contentOffset.y == -_upInset &&
+                                _slimeMissWhenGoingBack) {
                                 self.alpha = 0.0f;
                             }
                         } completion:^(BOOL finished) {
@@ -150,13 +152,16 @@
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         self.scrollView = (id)[self superview];
         CGRect rect = self.frame;
+        rect.size.height = 32.0f;
         rect.origin.y = -rect.size.height;
         rect.size.width = _scrollView.frame.size.width;
-        self.frame = rect;
+        super.frame = rect;
+        _slime.frame = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height);
+        _refleshView.center = _slime.toPoint = _slime.startPoint = CGPointMake(rect.size.width / 2, 16.0f);
         
         UIEdgeInsets inset = self.scrollView.contentInset;
         inset.top = _upInset;
-        self.scrollView.contentInset = inset;
+        self.scrollView.contentInset = inset; 
     }
 }
 
