@@ -153,8 +153,16 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
                 CGContextDrawPath(context, kCGPathFillStroke);
                 if (percent <= 0) {
                     _state = SRSlimeStateShortening;
+                    
+                    // pragma mark to suppress the warning
+                    // "performSelector may cause a leak because its selector is unknown"
+                    // applies only to the enclosed line
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
                     [_target performSelector:_action
                                   withObject:self];
+#pragma clang diagnostic pop
+                    
                     [self performSelector:@selector(scaling)
                                withObject:nil
                                afterDelay:kAnimationInterval
