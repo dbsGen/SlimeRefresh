@@ -13,7 +13,7 @@ Screenshot:
 How to use?
 ==================================================
 
-1,down the source from https://github.com/dbsGen/SlimeRefresh/ 
+1,download the source from https://github.com/dbsGen/SlimeRefresh/ 
 
 - git : ``` git clone https://github.com/dbsGen/SlimeRefresh.git SlimeRefresh ```
 
