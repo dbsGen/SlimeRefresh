@@ -186,7 +186,7 @@
     CGRect rect = self.frame;
     if (p.y <= - 32.0f - _upInset) {
         rect.origin.y = p.y + _upInset;
-        rect.size.height = -p.y;
+        rect.size.height = ceilf(-p.y);
         self.frame = rect;
         if (!self.loading) {
             [_slime setNeedsDisplay];
