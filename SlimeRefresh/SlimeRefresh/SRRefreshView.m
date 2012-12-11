@@ -21,6 +21,7 @@
 @implementation SRRefreshView {
     UIActivityIndicatorView *_activityIndicatorView;
     CGFloat     _oldLength;
+    BOOL        _unmissSlime;
 }
 
 @synthesize delegate = _delegate, broken = _broken;
@@ -35,10 +36,9 @@
     if (self) {
         _slime = [[SRSlimeView alloc] initWithFrame:
                   CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
-        _slime.toPoint = _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
+        _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
         
         [self addSubview:_slime];
-        
         
         _refleshView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sr_refresh"]];
         _refleshView.center = _slime.startPoint;
@@ -123,6 +123,10 @@
                                             forKey:@""];
         //_slime.hidden = YES;
         _refleshView.hidden = YES;
+        if (!_unmissSlime){
+            _slime.state = SRSlimeStateMiss;
+            _unmissSlime = YES;
+        }
     }else {
         
         [_activityIndicatorView stopAnimating];
@@ -153,16 +157,13 @@
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         self.scrollView = (id)[self superview];
         CGRect rect = self.frame;
-        rect.size.height = 32.0f;
         rect.origin.y = -rect.size.height;
         rect.size.width = _scrollView.frame.size.width;
-        super.frame = rect;
-        _slime.frame = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height);
-        _refleshView.center = _slime.toPoint = _slime.startPoint = CGPointMake(rect.size.width / 2, 16.0f);
+        self.frame = rect;
         
         UIEdgeInsets inset = self.scrollView.contentInset;
         inset.top = _upInset;
-        self.scrollView.contentInset = inset; 
+        self.scrollView.contentInset = inset;
     }
 }
 
@@ -172,9 +173,12 @@
 {
     //拉断了
     self.broken = YES;
+    _unmissSlime = YES;
     self.loading = YES;
     if ([_delegate respondsToSelector:@selector(slimeRefreshStartRefresh:)]) {
-        [_delegate slimeRefreshStartRefresh:self];
+        [(id)_delegate performSelector:@selector(slimeRefreshStartRefresh:)
+                            withObject:self
+                            afterDelay:0.0];
     }
     if (_block) {
         _block(self);
@@ -187,7 +191,8 @@
     CGRect rect = self.frame;
     if (p.y <= - 32.0f - _upInset) {
         rect.origin.y = p.y + _upInset;
-        rect.size.height = ceilf(-p.y);
+        rect.size.height = -p.y;
+        rect.size.height = ceilf(rect.size.height);
         self.frame = rect;
         if (!self.loading) {
             [_slime setNeedsDisplay];
@@ -248,31 +253,38 @@
 {
     if (self.loading) {
         //_notSetFrame = YES;
-        _slime.toPoint = _slime.startPoint;
-        [UIView transitionWithView:_activityIndicatorView
-                          duration:0.3f
-                           options:UIViewAnimationCurveEaseIn
-                        animations:^
-        {
-            _activityIndicatorView.layer.transform = CATransform3DRotate(
-                 CATransform3DMakeScale(0.01f, 0.01f, 0.1f), -M_PI, 0, 0, 1);
-        } completion:^(BOOL finished) 
-         {
-             self.loading = NO;
-             _slime.state = SRSlimeStateNormal;
-             //some bug here.
-//             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:
-//                                            @"transform"];
-//             animation.fromValue = [NSValue valueWithCATransform3D:
-//                                    CATransform3DMakeScale(0.1, 0.1, 1)];
-//             animation.toValue = [NSValue valueWithCATransform3D:
-//                                  CATransform3DIdentity];
-//             animation.duration = 0.2f;
-//             [_slime.layer addAnimation:animation
-//                                 forKey:@""];
-         }];
+        [self performSelector:@selector(restore)
+                   withObject:nil
+                   afterDelay:0];
     }
-    _oldLength = 0.0f;
+    _oldLength = 0;
+}
+
+- (void)restore
+{
+    _slime.toPoint = _slime.startPoint;
+    [UIView transitionWithView:_activityIndicatorView
+                      duration:0.3f
+                       options:UIViewAnimationCurveEaseIn
+                    animations:^
+     {
+         _activityIndicatorView.layer.transform = CATransform3DRotate(
+                                                                      CATransform3DMakeScale(0.01f, 0.01f, 0.1f), -M_PI, 0, 0, 1);
+     } completion:^(BOOL finished)
+     {
+         self.loading = NO;
+         _slime.state = SRSlimeStateNormal;
+ //some bug here.
+ //             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:
+ //                                            @"transform"];
+ //             animation.fromValue = [NSValue valueWithCATransform3D:
+ //                                    CATransform3DMakeScale(0.1, 0.1, 1)];
+ //             animation.toValue = [NSValue valueWithCATransform3D:
+ //                                  CATransform3DIdentity];
+ //             animation.duration = 0.2f;
+ //             [_slime.layer addAnimation:animation
+ //                                 forKey:@""];
+     }];
 }
 
 @end
