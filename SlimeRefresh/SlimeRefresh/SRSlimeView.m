@@ -10,9 +10,7 @@
 #import "SRDefine.h"
 #import <QuartzCore/QuartzCore.h>
 
-NS_INLINE CGFloat distansBetween(CGPoint p1 , CGPoint p2) {
-    return sqrtf((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
-}
+
 
 NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloat radius) {
     float angleS = atan2f(p2.y - center.y, p2.x - center.x);

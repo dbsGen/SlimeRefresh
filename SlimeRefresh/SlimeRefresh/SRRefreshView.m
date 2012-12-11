@@ -20,6 +20,7 @@
 
 @implementation SRRefreshView {
     UIActivityIndicatorView *_activityIndicatorView;
+    CGFloat     _oldLength;
 }
 
 @synthesize delegate = _delegate, broken = _broken;
@@ -193,10 +194,19 @@
         }
         if (!_broken) {
             float l = -(p.y + 32.0f + _upInset);
-            CGPoint ssp = _slime.startPoint;
-            _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
-            CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
-            _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+            if (l <= _oldLength) {
+                l = MIN(distansBetween(_slime.startPoint, _slime.toPoint), l);
+                CGPoint ssp = _slime.startPoint;
+                _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
+                CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
+                _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+            }else if (self.scrollView.isDragging) {
+                CGPoint ssp = _slime.startPoint;
+                _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
+                CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
+                _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+            }
+            _oldLength = l;
         }
         if (self.alpha != 1.0f) self.alpha = 1.0f;
     }else if (p.y < -_upInset) {
@@ -262,6 +272,7 @@
 //                                 forKey:@""];
          }];
     }
+    _oldLength = 0.0f;
 }
 
 @end
