@@ -157,7 +157,7 @@
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         self.scrollView = (id)[self superview];
         CGRect rect = self.frame;
-        rect.origin.y = -rect.size.height;
+        rect.origin.y = rect.size.height?-rect.size.height:-32;
         rect.size.width = _scrollView.frame.size.width;
         self.frame = rect;
         
