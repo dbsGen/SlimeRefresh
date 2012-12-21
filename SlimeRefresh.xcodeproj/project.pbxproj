@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		184CE2E3158B834F003C2C83 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 184CE2E1158B834F003C2C83 /* sr_refresh.png */; };
-		184CE2E4158B834F003C2C83 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 184CE2E2158B834F003C2C83 /* sr_refresh@2X.png */; };
 		184CE2EA158B86C6003C2C83 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2E9158B86C6003C2C83 /* SRRefreshView.m */; };
 		184CE2EC158B874A003C2C83 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2EB158B874A003C2C83 /* SRSlimeView.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		18C0D463158C92F100B13C13 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18C0D462158C92F100B13C13 /* QuartzCore.framework */; };
@@ -19,11 +18,11 @@
 		5F91927F158B0D0600FCC748 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F91927E158B0D0600FCC748 /* main.m */; };
 		5F919283158B0D0600FCC748 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919282158B0D0600FCC748 /* AppDelegate.m */; };
 		5F919294158B15AD00FCC748 /* SRTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F919293158B15AD00FCC748 /* SRTViewController.m */; };
+		5FBE060716845C1100459995 /* sr_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FBE060616845C1100459995 /* sr_refresh@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		184CE2E1158B834F003C2C83 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
-		184CE2E2158B834F003C2C83 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
 		184CE2E8158B86C6003C2C83 /* SRRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRRefreshView.h; sourceTree = "<group>"; };
 		184CE2E9158B86C6003C2C83 /* SRRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRefreshView.m; sourceTree = "<group>"; };
 		184CE2EB158B874A003C2C83 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		5F91928F158B0D4C00FCC748 /* SRSlimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRSlimeView.h; sourceTree = "<group>"; };
 		5F919292158B15AD00FCC748 /* SRTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRTViewController.h; sourceTree = "<group>"; };
 		5F919293158B15AD00FCC748 /* SRTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRTViewController.m; sourceTree = "<group>"; };
+		5FBE060616845C1100459995 /* sr_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				184CE2E1158B834F003C2C83 /* sr_refresh.png */,
-				184CE2E2158B834F003C2C83 /* sr_refresh@2X.png */,
+				5FBE060616845C1100459995 /* sr_refresh@2x.png */,
 				5F91928F158B0D4C00FCC748 /* SRSlimeView.h */,
 				184CE2EB158B874A003C2C83 /* SRSlimeView.m */,
 				184CE2E8158B86C6003C2C83 /* SRRefreshView.h */,
@@ -178,7 +178,7 @@
 			files = (
 				5F91927D158B0D0600FCC748 /* InfoPlist.strings in Resources */,
 				184CE2E3158B834F003C2C83 /* sr_refresh.png in Resources */,
-				184CE2E4158B834F003C2C83 /* sr_refresh@2X.png in Resources */,
+				5FBE060716845C1100459995 /* sr_refresh@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

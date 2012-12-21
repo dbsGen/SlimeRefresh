@@ -53,6 +53,11 @@
         _slimeView.delegate = self;
         _slimeView.upInset = 44;
         _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor blackColor];
+        _slimeView.slime.skinColor = [UIColor whiteColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor blackColor];
         
         [_tableView addSubview:_slimeView];
         
