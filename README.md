@@ -9,6 +9,9 @@ Screenshot:
 ![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot2.png)
 ![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot3.png)
 ![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/07/screenshot4.png)
+![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/12/ss1.png)
+![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/12/ss2.png)
+
 
 How to use?
 ==================================================
