@@ -19,7 +19,7 @@ Screenshot:
 
 ![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/12/ss3.png)
 
-How to use?
+Using
 ==================================================
 
 1,download the source from https://github.com/dbsGen/SlimeRefresh/ 
@@ -62,32 +62,14 @@ as you see there is a block to receive the refresh event.just like:
 Style
 ==================================================
 
-- Change to style of the slime, You have to get the instance of SRSlimeView by this ```    refreshView.slime    ```
-  - ``` viscous ``` this property to set how the limit of the slime being pulled apart.
-  - ``` radius ``` to set the size of slime.
-  - ``` bodyColor ``` to set the fill color.
-  - ``` skinColor ``` to set the line color.
+- Refere to the demo.
 
-- How to set the arrow image?
-  - ``` refreshView.refleshView.image ``` use this to set the arrow image.
+- The reflesh arrow image :
+  - refreshView.refleshView.image = [UIImage imaggeNamed:@"Yours"];
+  - refreshView.refreshView.bounds = CGRectMake(0, 0, 23, 23);
+  - I'm sorry, it is not a good name.
 
-Up inset
-==================================================
-
-Some time you maybe want to add the ``` SRRefreshView ``` to a ``` UIScrollView ``` which 
-
-have setted the ``` contentInset ```. At this time you will set the ``` upInset ``` , you 
-
-just need to set the top.
-
-Action
-==================================================
-
-- call ``` scrollViewDidScroll ``` in the protocol ``` scrollViewDidScroll: ``` of ``` UIScrollViewDelegate ```.
-- call ```  scrollViewDidEndDraging ``` in the ``` scrollViewDidEndDragging:willDecelerate: ```.
-- and if the refresh loading over you will call ``` endRefresh ```.
-
-Last
+Others
 ==================================================
 
 Ok, that is all. Enjoy it, and this is my blog:http://zhaorenzhi.cn.
