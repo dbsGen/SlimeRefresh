@@ -10,7 +10,6 @@
 #import "SRSlimeView.h"
 #import "SRDefine.h"
 #import <QuartzCore/QuartzCore.h>
-#import "WToolbar.h"
 
 @interface SRRefreshView()
 
