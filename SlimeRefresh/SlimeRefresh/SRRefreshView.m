@@ -10,6 +10,7 @@
 #import "SRSlimeView.h"
 #import "SRDefine.h"
 #import <QuartzCore/QuartzCore.h>
+#import "WToolbar.h"
 
 @interface SRRefreshView()
 
@@ -124,6 +125,11 @@
                                             forKey:@""];
         //_slime.hidden = YES;
         _refleshView.hidden = YES;
+        if (!_scrollView.isDragging) {
+            UIEdgeInsets inset = _scrollView.contentInset;
+            inset.top = _upInset + 32.0f;
+            _scrollView.contentInset = inset;
+        }
         if (!_unmissSlime){
             _slime.state = SRSlimeStateMiss;
         }else {
@@ -151,6 +157,14 @@
                         }];
         
     }
+}
+
+- (void)setLoadingWithexpansion
+{
+    self.loading = YES;
+    [_scrollView setContentOffset:CGPointMake(_scrollView.contentOffset.x,
+                                              -_scrollView.contentInset.top)
+                         animated:YES];
 }
 
 - (void)didMoveToSuperview
