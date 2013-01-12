@@ -180,6 +180,8 @@
         UIEdgeInsets inset = self.scrollView.contentInset;
         inset.top = _upInset;
         self.scrollView.contentInset = inset;
+    }else if (!self.superview) {
+        self.scrollView = nil;
     }
 }
 
