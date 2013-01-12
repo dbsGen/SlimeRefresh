@@ -69,6 +69,19 @@ Style
   - refreshView.refreshView.bounds = CGRectMake(0, 0, 23, 23);
   - I'm sorry, it is not a good name.
 
+Bug
+==================================================
+
+- When in the animation the view controller dealloc, that will make application creash.
+  - Use the new version and remove refreshView from it's super view, when view controller dealloced.
+    
+<code>
+    - (void)dealloc 
+    {
+          [refreshView removeFromSuperview];
+    }
+</code>
+  
 Others
 ==================================================
 
