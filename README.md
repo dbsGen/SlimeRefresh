@@ -19,7 +19,7 @@ Screenshot:
 
 ![screenshots](http://zhaorenzhi.cn/wp-content/uploads/2012/12/ss3.png)
 
-Using
+Usage
 ==================================================
 
 1,download the source from https://github.com/dbsGen/SlimeRefresh/ 
