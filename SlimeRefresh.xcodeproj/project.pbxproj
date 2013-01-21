@@ -11,6 +11,7 @@
 		184CE2EA158B86C6003C2C83 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2E9158B86C6003C2C83 /* SRRefreshView.m */; };
 		184CE2EC158B874A003C2C83 /* SRSlimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184CE2EB158B874A003C2C83 /* SRSlimeView.m */; settings = {COMPILER_FLAGS = "-Wno-arc-performSelector-leaks"; }; };
 		18C0D463158C92F100B13C13 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18C0D462158C92F100B13C13 /* QuartzCore.framework */; };
+		5F78272C16ACD633001D43CA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F78272B16ACD633001D43CA /* Default-568h@2x.png */; };
 		5F919273158B0D0600FCC748 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919272158B0D0600FCC748 /* UIKit.framework */; };
 		5F919275158B0D0600FCC748 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919274158B0D0600FCC748 /* Foundation.framework */; };
 		5F919277158B0D0600FCC748 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F919276158B0D0600FCC748 /* CoreGraphics.framework */; };
@@ -28,6 +29,7 @@
 		184CE2EB158B874A003C2C83 /* SRSlimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRSlimeView.m; sourceTree = "<group>"; };
 		184CE2ED158B9344003C2C83 /* SRDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
 		18C0D462158C92F100B13C13 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5F78272B16ACD633001D43CA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5F91926E158B0D0600FCC748 /* SlimeRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlimeRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F919272158B0D0600FCC748 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F919274158B0D0600FCC748 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -62,6 +64,7 @@
 		5F919263158B0D0600FCC748 = {
 			isa = PBXGroup;
 			children = (
+				5F78272B16ACD633001D43CA /* Default-568h@2x.png */,
 				5F919278158B0D0600FCC748 /* SlimeRefresh */,
 				5F919271158B0D0600FCC748 /* Frameworks */,
 				5F91926F158B0D0600FCC748 /* Products */,
@@ -179,6 +182,7 @@
 				5F91927D158B0D0600FCC748 /* InfoPlist.strings in Resources */,
 				184CE2E3158B834F003C2C83 /* sr_refresh.png in Resources */,
 				5FBE060716845C1100459995 /* sr_refresh@2x.png in Resources */,
+				5F78272C16ACD633001D43CA /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

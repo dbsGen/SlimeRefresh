@@ -14,7 +14,7 @@
 @interface SRRefreshView()
 
 @property (nonatomic, assign)   BOOL    broken;
-@property (nonatomic, assign)   UIScrollView    *scrollView;
+@property (nonatomic, strong)   UIScrollView    *scrollView;
 
 @end
 
@@ -22,6 +22,7 @@
     UIActivityIndicatorView *_activityIndicatorView;
     CGFloat     _oldLength;
     BOOL        _unmissSlime;
+    CGFloat     _dragingHeight;
 }
 
 @synthesize delegate = _delegate, broken = _broken;
@@ -31,13 +32,24 @@
 @synthesize slimeMissWhenGoingBack = _slimeMissWhenGoingBack;
 @synthesize activityIndicationView = _activityIndicatorView;
 
+- (void)dealloc
+{
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
+    self = [self initWithHeight:32];
+    return self;
+}
+
+- (id)initWithHeight:(CGFloat)height
+{
+    CGRect frame = CGRectMake(0, 0, 320, height);
     self = [super initWithFrame:frame];
     if (self) {
         _slime = [[SRSlimeView alloc] initWithFrame:
                   CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
-        _slime.startPoint = CGPointMake(frame.size.width / 2, 20.0f);
+        _slime.startPoint = CGPointMake(frame.size.width / 2, height / 2);
         
         [self addSubview:_slime];
         
@@ -46,7 +58,7 @@
         _refleshView.bounds = CGRectMake(0.0f, 0.0f, kRefreshImageWidth, kRefreshImageWidth);
         [self addSubview:_refleshView];
         
-        _activityIndicatorView = [[UIActivityIndicatorView alloc] 
+        _activityIndicatorView = [[UIActivityIndicatorView alloc]
                                   initWithActivityIndicatorStyle:
                                   UIActivityIndicatorViewStyleGray];
         [_activityIndicatorView stopAnimating];
@@ -55,6 +67,7 @@
         
         [_slime setPullApartTarget:self
                             action:@selector(pullApart:)];
+        _dragingHeight = height;
     }
     return self;
 }
@@ -66,7 +79,7 @@
     [super setFrame:frame];
     if (_slime.state == SRSlimeStateNormal) {
         _slime.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
-        _slime.startPoint = CGPointMake(frame.size.width / 2, 16.0f);
+        _slime.startPoint = CGPointMake(frame.size.width / 2, _dragingHeight / 2);
     }
     _refleshView.center = _slime.startPoint;
     _activityIndicatorView.center = _slime.startPoint;
@@ -88,7 +101,7 @@
         _slime.alpha = 1;
     }else {
         CGPoint p = _scrollView.contentOffset;
-        self.alpha = -(p.y + _upInset) / 32.0f;
+        self.alpha = -(p.y + _upInset) / _dragingHeight;
     }
 }
 
@@ -126,7 +139,7 @@
         _refleshView.hidden = YES;
         if (!_scrollView.isDragging) {
             UIEdgeInsets inset = _scrollView.contentInset;
-            inset.top = _upInset + 32.0f;
+            inset.top = _upInset + _dragingHeight;
             _scrollView.contentInset = inset;
         }
         if (!_unmissSlime){
@@ -172,7 +185,7 @@
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         self.scrollView = (id)[self superview];
         CGRect rect = self.frame;
-        rect.origin.y = rect.size.height?-rect.size.height:-32;
+        rect.origin.y = rect.size.height?-rect.size.height:-_dragingHeight;
         rect.size.width = _scrollView.frame.size.width;
         self.frame = rect;
         self.slime.toPoint = self.slime.startPoint;
@@ -207,7 +220,7 @@
 {
     CGPoint p = _scrollView.contentOffset;
     CGRect rect = self.frame;
-    if (p.y <= - 32.0f - _upInset) {
+    if (p.y <= - _dragingHeight - _upInset) {
         rect.origin.y = p.y + _upInset;
         rect.size.height = -p.y;
         rect.size.height = ceilf(rect.size.height);
@@ -216,7 +229,7 @@
             [_slime setNeedsDisplay];
         }
         if (!_broken) {
-            float l = -(p.y + 32.0f + _upInset);
+            float l = -(p.y + _dragingHeight + _upInset);
             if (l <= _oldLength) {
                 l = MIN(distansBetween(_slime.startPoint, _slime.toPoint), l);
                 CGPoint ssp = _slime.startPoint;
@@ -233,12 +246,12 @@
         }
         if (self.alpha != 1.0f) self.alpha = 1.0f;
     }else if (p.y < -_upInset) {
-        rect.origin.y = -32.0f;
-        rect.size.height = 32.0f;
+        rect.origin.y = -_dragingHeight;
+        rect.size.height = _dragingHeight;
         self.frame = rect;
         [_slime setNeedsDisplay];
         _slime.toPoint = _slime.startPoint;
-        if (_slimeMissWhenGoingBack) self.alpha = -(p.y + _upInset) / 32.0f;
+        if (_slimeMissWhenGoingBack) self.alpha = -(p.y + _upInset) / _dragingHeight;
     }
 }
 
@@ -251,7 +264,7 @@
                                options:UIViewAnimationCurveEaseOut
                             animations:^{
                                 UIEdgeInsets inset = _scrollView.contentInset;
-                                inset.top = _upInset + 32.0f;
+                                inset.top = _upInset + _dragingHeight;
                                 _scrollView.contentInset = inset;
                             } completion:^(BOOL finished) {
                                 self.broken = NO;
