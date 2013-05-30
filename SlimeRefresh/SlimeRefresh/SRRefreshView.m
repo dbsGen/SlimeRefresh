@@ -137,11 +137,6 @@
                                             forKey:@""];
         //_slime.hidden = YES;
         _refleshView.hidden = YES;
-        if (!_scrollView.isDragging) {
-            UIEdgeInsets inset = _scrollView.contentInset;
-            inset.top = _upInset + _dragingHeight;
-            _scrollView.contentInset = inset;
-        }
         if (!_unmissSlime){
             _slime.state = SRSlimeStateMiss;
         }else {
@@ -173,10 +168,15 @@
 
 - (void)setLoadingWithexpansion
 {
+    [UIView animateWithDuration:0.2 animations:^() {
+        UIEdgeInsets inset = _scrollView.contentInset;
+        inset.top = _upInset + _dragingHeight;
+        _scrollView.contentInset = inset;
+        [_scrollView setContentOffset:CGPointMake(_scrollView.contentOffset.x,
+                                                  -_scrollView.contentInset.top)
+                             animated:NO];
+    }];
     self.loading = YES;
-    [_scrollView setContentOffset:CGPointMake(_scrollView.contentOffset.x,
-                                              -_scrollView.contentInset.top)
-                         animated:YES];
 }
 
 - (void)didMoveToSuperview
