@@ -146,7 +146,6 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         case SRSlimeStateNormal:
         {
             float percent = 1 - distansBetween(_startPoint , _toPoint) / [self _getViscous];
-            NSLog(@"%f", percent);
             if (percent == 1) {
                 CGContextRef context = UIGraphicsGetCurrentContext();
                 UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(_startPoint.x - _radius, _startPoint.y - _radius, 2*_radius, 2*_radius)
