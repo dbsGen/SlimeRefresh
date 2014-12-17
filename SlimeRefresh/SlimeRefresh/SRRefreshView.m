@@ -198,6 +198,13 @@
     }
 }
 
+- (void)update {
+    if (_scrollView) {
+        self.frame = CGRectMake(0, 0, _scrollView.bounds.size.width, _dragingHeight);
+        _slime.toPoint = CGPointMake(self.frame.size.width / 2, _dragingHeight / 2);
+    }
+}
+
 #pragma mark - action
 
 - (void)pullApart:(SRRefreshView*)refreshView

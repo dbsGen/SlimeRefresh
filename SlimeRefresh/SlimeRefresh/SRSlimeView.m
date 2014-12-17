@@ -41,6 +41,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
                                              frame.size.height / 2);
         _viscous = 55.0f;
         _radius = 13.0f;
+        
         _bodyColor = [UIColor blackColor];
         _skinColor = [UIColor colorWithWhite:0.8f alpha:0.9f];
         
@@ -81,6 +82,15 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     if (_state == SRSlimeStateNormal) {
         _toPoint = toPoint;
         [self setNeedsDisplay];
+    }
+}
+
+- (CGFloat)_getViscous {
+    UIInterfaceOrientation io = [[UIApplication sharedApplication].delegate window].rootViewController.interfaceOrientation;
+    if (UIInterfaceOrientationIsLandscape(io)) {
+        return _viscous * 0.7;
+    }else {
+        return _viscous;
     }
 }
 
@@ -135,13 +145,14 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     switch (_state) {
         case SRSlimeStateNormal:
         {
-            float percent = 1 - distansBetween(_startPoint , _toPoint) / _viscous;
+            float percent = 1 - distansBetween(_startPoint , _toPoint) / [self _getViscous];
+            NSLog(@"%f", percent);
             if (percent == 1) {
                 CGContextRef context = UIGraphicsGetCurrentContext();
                 UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(_startPoint.x - _radius, _startPoint.y - _radius, 2*_radius, 2*_radius)
                                                                 cornerRadius:_radius];
                 
-
+                
                 [self setContext:context path:path];
                 CGContextDrawPath(context, kCGPathFillStroke);
             }else {
@@ -178,7 +189,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
         {
             _toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.8 + _startPoint.x,
                                        (_toPoint.y - _startPoint.y)*0.8 + _startPoint.y);
-            float p = distansBetween(_startPoint, _toPoint) / _viscous;
+            float p = distansBetween(_startPoint, _toPoint) / [self _getViscous];
             float percent =1 -p;
             float r = _radius * p;
             

@@ -51,6 +51,8 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 
 // init default is 32
 - (id)initWithHeight:(CGFloat)height;
+// call update when the scrollView size changed.
+-(void)update;
 
 @end
 
