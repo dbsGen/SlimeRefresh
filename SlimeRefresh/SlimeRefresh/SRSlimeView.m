@@ -86,12 +86,7 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
 }
 
 - (CGFloat)_getViscous {
-    UIInterfaceOrientation io = [[UIApplication sharedApplication].delegate window].rootViewController.interfaceOrientation;
-    if (UIInterfaceOrientationIsLandscape(io)) {
-        return _viscous * 0.7;
-    }else {
-        return _viscous;
-    }
+    return _viscous;
 }
 
 - (UIBezierPath*)bodyPath:(CGFloat)startRadius end:(CGFloat)endRadius percent:(float)percent
