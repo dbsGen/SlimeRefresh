@@ -39,7 +39,7 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 //to go to miss.
 @property (nonatomic, assign)   BOOL    slimeMissWhenGoingBack;
 
-// 
+// not need
 @property (nonatomic, assign)   CGFloat upInset;
 
 //
@@ -52,7 +52,7 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 // init default is 32
 - (id)initWithHeight:(CGFloat)height;
 // call update when the scrollView size changed.
--(void)update;
+-(void)update:(CGFloat)upInset;
 
 @end
 

@@ -32,16 +32,14 @@
 {
     [super viewDidLoad];
     
-    const float barHeight = 20;
     CGRect bounds = self.view.bounds;
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, barHeight, bounds.size.width, bounds.size.height-barHeight)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
     bounds.size.height += 1;
     _tableView.delegate = self;
     [self.view addSubview:_tableView];
     
     _slimeView = [[SRRefreshView alloc] init];
     _slimeView.delegate = self;
-    _slimeView.upInset = 44;
     _slimeView.slimeMissWhenGoingBack = YES;
     _slimeView.slime.bodyColor = [UIColor blackColor];
     _slimeView.slime.skinColor = [UIColor whiteColor];
@@ -49,12 +47,14 @@
     _slimeView.slime.shadowBlur = 4;
     _slimeView.slime.shadowColor = [UIColor blackColor];
     
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, bounds.size.width, 40)];
+    headerView.backgroundColor = [UIColor redColor];
+    _tableView.tableHeaderView = headerView;
+    _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth| UIViewAutoresizingFlexibleHeight;
     [_tableView addSubview:_slimeView];
-    _tableView.contentInset = UIEdgeInsetsMake(-barHeight, 0, 0, 0);
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 100, 100)];
-    view.backgroundColor = [UIColor redColor];
-    [self.view addSubview:view];
+    [_slimeView update:64];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,8 +73,11 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    _tableView.frame = [UIScreen mainScreen].bounds;
-    [_slimeView update];
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        [_slimeView update:64];
+    }else {
+        [_slimeView update:32];
+    }
 }
 
 #pragma mark - scrollView delegate

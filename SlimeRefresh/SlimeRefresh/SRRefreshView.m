@@ -32,6 +32,7 @@
 @synthesize slimeMissWhenGoingBack = _slimeMissWhenGoingBack;
 @synthesize activityIndicationView = _activityIndicatorView;
 
+
 - (void)dealloc
 {
 }
@@ -68,11 +69,15 @@
         [_slime setPullApartTarget:self
                             action:@selector(pullApart:)];
         _dragingHeight = height;
+        _upInset = 44;
     }
     return self;
 }
 
 #pragma mark - setters
+
+- (void)setUpInset:(CGFloat)upInset{}
+- (CGFloat)upInset{return _upInset;}
 
 - (void)setFrame:(CGRect)frame
 {
@@ -84,15 +89,14 @@
     _refleshView.center = _slime.startPoint;
     _activityIndicatorView.center = _slime.startPoint;
 }
-
-- (void)setUpInset:(CGFloat)upInset
-{
-    _upInset = upInset;
-    UIEdgeInsets inset = _scrollView.contentInset;
-    inset.top = _upInset;
-    _scrollView.contentInset = inset;
-    
-}
+//
+//- (void)setUpInset:(CGFloat)upInset
+//{
+//    _upInset = upInset;
+//    UIEdgeInsets inset = _scrollView.contentInset;
+//    inset.top = _upInset;
+//    _scrollView.contentInset = inset;
+//}
 
 - (void)setSlimeMissWhenGoingBack:(BOOL)slimeMissWhenGoingBack
 {
@@ -198,8 +202,9 @@
     }
 }
 
-- (void)update {
+-(void)update:(CGFloat)upInset {
     if (_scrollView) {
+        _upInset = upInset;
         self.frame = CGRectMake(0, 0, _scrollView.bounds.size.width, _dragingHeight);
         _slime.toPoint = CGPointMake(self.frame.size.width / 2, _dragingHeight / 2);
     }
