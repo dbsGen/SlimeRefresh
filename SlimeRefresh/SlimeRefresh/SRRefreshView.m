@@ -272,15 +272,31 @@
 {
     if (_broken) {
         if (self.loading) {
-            [UIView transitionWithView:_scrollView
+            [UIView transitionWithView:_scrollView.superview
                               duration:0.2
-                               options:UIViewAnimationCurveEaseOut
+                               options:0
                             animations:^{
                                 UIEdgeInsets inset = _scrollView.contentInset;
-                                inset.top = _upInset + _dragingHeight;
+                                inset.top = -_scrollView.contentOffset.y;
                                 _scrollView.contentInset = inset;
                             } completion:^(BOOL finished) {
                                 self.broken = NO;
+                                
+                                [UIView transitionWithView:_scrollView.superview
+                                                  duration:0.2
+                                                   options:0
+                                                animations:^{
+                                                    UIEdgeInsets inset = _scrollView.contentInset;
+                                                    inset.top = _upInset + _dragingHeight;
+                                                    _scrollView.contentInset = inset;
+                                                } completion:^(BOOL finished) {
+                                                    self.broken = NO;
+                                                    
+                                                    
+                                                    
+                                                }];
+                                
+                                
                             }];
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.2f];
@@ -290,6 +306,7 @@
                        withObject:nil afterDelay:0.2];
             self.loading = NO;
         }
+        
     }
 }
 
