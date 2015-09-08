@@ -205,7 +205,7 @@
 -(void)update:(CGFloat)upInset {
     if (_scrollView) {
         _upInset = upInset;
-        _slime.viscous = _upInset;
+        _slime.viscous = MAX(_upInset, 32);
         self.frame = CGRectMake(0, 0, _scrollView.bounds.size.width, _dragingHeight);
         _slime.toPoint = CGPointMake(self.frame.size.width / 2, _dragingHeight / 2);
     }
@@ -280,8 +280,6 @@
                                 inset.top = -_scrollView.contentOffset.y;
                                 _scrollView.contentInset = inset;
                             } completion:^(BOOL finished) {
-                                self.broken = NO;
-                                
                                 [UIView transitionWithView:_scrollView.superview
                                                   duration:0.2
                                                    options:0
@@ -291,12 +289,7 @@
                                                     _scrollView.contentInset = inset;
                                                 } completion:^(BOOL finished) {
                                                     self.broken = NO;
-                                                    
-                                                    
-                                                    
                                                 }];
-                                
-                                
                             }];
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.2f];
