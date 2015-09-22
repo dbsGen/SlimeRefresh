@@ -57,6 +57,11 @@
     [_slimeView update:64];
 }
 
+- (void)dealloc
+{
+    [_slimeView removeFromSuperview];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
