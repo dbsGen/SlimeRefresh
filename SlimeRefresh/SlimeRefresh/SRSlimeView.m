@@ -52,14 +52,13 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
     return self;
 }
 
-// ==== not need
-//- (void)setFrame:(CGRect)frame
-//{
-//    [super setFrame:frame];
-//    _toPoint = _startPoint = CGPointMake(frame.size.width / 2,
-//                                         frame.size.height / 2);
-//    [self setNeedsDisplay];
-//}
+- (void)setFrame:(CGRect)frame
+{
+    if (!CGRectEqualToRect(frame, self.frame)) {
+        [super setFrame:frame];
+        [self setNeedsDisplay];
+    }
+}
 
 - (void)setLineWith:(CGFloat)lineWith
 {

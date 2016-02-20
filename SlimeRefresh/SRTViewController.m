@@ -78,10 +78,12 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        [_slimeView update:64];
-    }else {
-        [_slimeView update:32];
+    if ([[[UIDevice currentDevice] model] isEqualToString:@"iPhone"]) {
+        if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+            [_slimeView update:64];
+        }else {
+            [_slimeView update:32];
+        }
     }
 }
 

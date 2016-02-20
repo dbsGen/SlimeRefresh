@@ -68,6 +68,7 @@
         
         [_slime setPullApartTarget:self
                             action:@selector(pullApart:)];
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _dragingHeight = height;
         _upInset = 44;
     }
@@ -82,21 +83,13 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    if (_slime.state == SRSlimeStateNormal) {
-        _slime.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
-        _slime.startPoint = CGPointMake(frame.size.width / 2, _dragingHeight / 2);
+    _refleshView.layer.transform = CATransform3DIdentity;
+    _slime.toPoint = _slime.startPoint = CGPointMake(frame.size.width / 2, frame.size.height - _dragingHeight / 2);
+    if (_scrollView) {
+        [self scroll];
     }
-    _refleshView.center = _slime.startPoint;
-    _activityIndicatorView.center = _slime.startPoint;
+    _activityIndicatorView.center = _refleshView.center = CGPointMake(frame.size.width / 2, _dragingHeight / 2);
 }
-//
-//- (void)setUpInset:(CGFloat)upInset
-//{
-//    _upInset = upInset;
-//    UIEdgeInsets inset = _scrollView.contentInset;
-//    inset.top = _upInset;
-//    _scrollView.contentInset = inset;
-//}
 
 - (void)setSlimeMissWhenGoingBack:(BOOL)slimeMissWhenGoingBack
 {
@@ -154,7 +147,7 @@
         _refleshView.layer.transform = CATransform3DIdentity;
         [UIView transitionWithView:_scrollView
                           duration:0.3f
-                           options:UIViewAnimationCurveEaseOut
+                           options:UIViewAnimationOptionCurveEaseOut
                         animations:^{
                             UIEdgeInsets inset = _scrollView.contentInset;
                             inset.top = _upInset;
@@ -165,6 +158,9 @@
                             }
                         } completion:^(BOOL finished) {
                             //_notSetFrame = NO;
+                            CGRect bounds = self.bounds;
+                            _slime.frame = bounds;
+                            _slime.toPoint = _slime.startPoint = CGPointMake(bounds.size.width / 2, _dragingHeight / 2);
                         }];
         
     }
@@ -206,7 +202,7 @@
     if (_scrollView) {
         _upInset = upInset;
         _slime.viscous = MAX(_upInset, 32);
-        self.frame = CGRectMake(0, 0, _scrollView.bounds.size.width, _dragingHeight);
+        self.frame = CGRectMake(0, -self.frame.size.height, _scrollView.bounds.size.width, _dragingHeight);
         _slime.toPoint = CGPointMake(self.frame.size.width / 2, _dragingHeight / 2);
     }
 }
@@ -229,42 +225,47 @@
     }
 }
 
+- (void)scroll {
+    if (!_broken) {
+        CGPoint p = _scrollView.contentOffset;
+        CGRect frame = self.frame;
+        _slime.frame = CGRectMake(0.0f, frame.size.height + p.y + _upInset,
+                                  frame.size.width, -p.y);
+        _slime.startPoint = CGPointMake(frame.size.width / 2, -p.y - _upInset - _dragingHeight / 2);
+        float l = -(p.y + _dragingHeight + _upInset);
+        if (l <= _oldLength) {
+            l = MIN(distansBetween(_slime.startPoint, _slime.toPoint), l);
+            CGPoint ssp = _slime.startPoint;
+            _slime.toPoint = CGPointMake(ssp.x, ssp.y - l);
+            CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
+            _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+        }else if (self.scrollView.isDragging) {
+            CGPoint ssp = _slime.startPoint;
+            _slime.toPoint = CGPointMake(ssp.x, ssp.y - l);
+            CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
+            _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+        }
+        _oldLength = l;
+    }
+}
+
 - (void)scrollViewDidScroll
 {
     CGPoint p = _scrollView.contentOffset;
-    CGRect rect = self.frame;
+    if (p.y == -_upInset) {
+        CGRect bounds = self.bounds;
+        _slime.frame = bounds;
+        _slime.toPoint = _slime.startPoint = CGPointMake(bounds.size.width / 2, _dragingHeight / 2);
+    }
     if (p.y <= - _dragingHeight - _upInset) {
-        rect.origin.y = p.y + _upInset;
-        rect.size.height = -p.y;
-        rect.size.height = ceilf(rect.size.height);
-        self.frame = rect;
-        if (!self.loading) {
-            [_slime setNeedsDisplay];
-        }
-        if (!_broken) {
-            float l = -(p.y + _dragingHeight + _upInset);
-            if (l <= _oldLength) {
-                l = MIN(distansBetween(_slime.startPoint, _slime.toPoint), l);
-                CGPoint ssp = _slime.startPoint;
-                _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
-                CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
-                _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
-            }else if (self.scrollView.isDragging) {
-                CGPoint ssp = _slime.startPoint;
-                _slime.toPoint = CGPointMake(ssp.x, ssp.y + l);
-                CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
-                _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
-            }
-            _oldLength = l;
-        }
+        [self scroll];
         if (self.alpha != 1.0f) self.alpha = 1.0f;
     }else if (p.y < -_upInset) {
-        rect.origin.y = -_dragingHeight;
-        rect.size.height = _dragingHeight;
-        self.frame = rect;
         [_slime setNeedsDisplay];
-        _slime.toPoint = _slime.startPoint;
         if (_slimeMissWhenGoingBack) self.alpha = -(p.y + _upInset) / _dragingHeight;
+        if (!_broken) {
+            _slime.frame = self.bounds;
+        }
     }
 }
 
@@ -319,7 +320,7 @@
     _slime.toPoint = _slime.startPoint;
     [UIView transitionWithView:_activityIndicatorView
                       duration:0.3f
-                       options:UIViewAnimationCurveEaseIn
+                       options:UIViewAnimationOptionCurveEaseIn
                     animations:^
      {
          _activityIndicatorView.layer.transform = CATransform3DRotate(
@@ -328,16 +329,6 @@
      {
          self.loading = NO;
          _slime.state = SRSlimeStateNormal;
- //some bug here.
- //             CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:
- //                                            @"transform"];
- //             animation.fromValue = [NSValue valueWithCATransform3D:
- //                                    CATransform3DMakeScale(0.1, 0.1, 1)];
- //             animation.toValue = [NSValue valueWithCATransform3D:
- //                                  CATransform3DIdentity];
- //             animation.duration = 0.2f;
- //             [_slime.layer addAnimation:animation
- //                                 forKey:@""];
      }];
 }
 
