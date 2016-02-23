@@ -65,10 +65,10 @@
         [_activityIndicatorView stopAnimating];
         _activityIndicatorView.center = _slime.startPoint;
         [self addSubview:_activityIndicatorView];
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         [_slime setPullApartTarget:self
                             action:@selector(pullApart:)];
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _dragingHeight = height;
         _upInset = 44;
     }
@@ -132,7 +132,7 @@
         _activityIndicatorView.layer.transform = CATransform3DIdentity;
         [_activityIndicatorView.layer addAnimation:aniamtion
                                             forKey:@""];
-        //_slime.hidden = YES;
+//        _slime.hidden = YES;
         _refleshView.hidden = YES;
         if (!_unmissSlime){
             _slime.state = SRSlimeStateMiss;
@@ -142,7 +142,6 @@
     }else {
         
         [_activityIndicatorView stopAnimating];
-        _slime.hidden = NO;
         _refleshView.hidden = NO;
         _refleshView.layer.transform = CATransform3DIdentity;
         [UIView transitionWithView:_scrollView
@@ -157,7 +156,7 @@
                                 self.alpha = 0.0f;
                             }
                         } completion:^(BOOL finished) {
-                            //_notSetFrame = NO;
+                            _slime.hidden = NO;
                             CGRect bounds = self.bounds;
                             _slime.frame = bounds;
                             _slime.toPoint = _slime.startPoint = CGPointMake(bounds.size.width / 2, _dragingHeight / 2);
@@ -212,7 +211,7 @@
 - (void)pullApart:(SRRefreshView*)refreshView
 {
     //拉断了
-    self.broken = YES;
+    self.broken= YES;
     _unmissSlime = YES;
     self.loading = YES;
     if ([_delegate respondsToSelector:@selector(slimeRefreshStartRefresh:)]) {
@@ -317,6 +316,7 @@
 
 - (void)restore
 {
+    _slime.hidden = YES;
     _slime.toPoint = _slime.startPoint;
     [UIView transitionWithView:_activityIndicatorView
                       duration:0.3f
