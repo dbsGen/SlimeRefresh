@@ -236,12 +236,12 @@
             l = MIN(distansBetween(_slime.startPoint, _slime.toPoint), l);
             CGPoint ssp = _slime.startPoint;
             _slime.toPoint = CGPointMake(ssp.x, ssp.y - l);
-            CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
+            CGFloat pf = MIN(MAX((1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo, 0), 1);
             _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
         }else if (self.scrollView.isDragging) {
             CGPoint ssp = _slime.startPoint;
             _slime.toPoint = CGPointMake(ssp.x, ssp.y - l);
-            CGFloat pf = (1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo;
+            CGFloat pf = MIN(MAX((1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo, 0), 1);
             _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
         }
         _oldLength = l;
@@ -263,8 +263,12 @@
         [_slime setNeedsDisplay];
         if (_slimeMissWhenGoingBack) self.alpha = -(p.y + _upInset) / _dragingHeight;
         if (!_broken) {
+            CGRect bounds = self.bounds;
+            _slime.toPoint = _slime.startPoint = CGPointMake(bounds.size.width / 2, _dragingHeight / 2);
             _slime.frame = self.bounds;
         }
+    }else {
+        self.alpha = 0;
     }
 }
 
