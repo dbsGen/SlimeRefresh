@@ -73,7 +73,7 @@ Bug
 ==================================================
 
 - When in the animation the view controller dealloc, that will make application creash.
-  - Use the new version and remove refreshView from it's super view, when view controller dealloced.
+  - Use the last version and remove refreshView from it's super view, when view controller dealloced.
     
 <code>
     - (void)dealloc 
