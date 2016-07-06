@@ -27,7 +27,7 @@
 
 @synthesize delegate = _delegate, broken = _broken;
 @synthesize loading = _loading, scrollView = _scrollView;
-@synthesize slime = _slime, refleshView = _refleshView;
+@synthesize slime = _slime, refreshView = _refreshView;
 @synthesize block = _block, upInset = _upInset;
 @synthesize slimeMissWhenGoingBack = _slimeMissWhenGoingBack;
 @synthesize activityIndicationView = _activityIndicatorView;
@@ -54,10 +54,10 @@
         
         [self addSubview:_slime];
         
-        _refleshView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sr_refresh"]];
-        _refleshView.center = _slime.startPoint;
-        _refleshView.bounds = CGRectMake(0.0f, 0.0f, kRefreshImageWidth, kRefreshImageWidth);
-        [self addSubview:_refleshView];
+        _refreshView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sr_refresh"]];
+        _refreshView.center = _slime.startPoint;
+        _refreshView.bounds = CGRectMake(0.0f, 0.0f, kRefreshImageWidth, kRefreshImageWidth);
+        [self addSubview:_refreshView];
         
         _activityIndicatorView = [[UIActivityIndicatorView alloc]
                                   initWithActivityIndicatorStyle:
@@ -83,12 +83,11 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    _refleshView.layer.transform = CATransform3DIdentity;
+    _refreshView.layer.transform = CATransform3DIdentity;
     _slime.toPoint = _slime.startPoint = CGPointMake(frame.size.width / 2, frame.size.height - _dragingHeight / 2);
     if (_scrollView) {
         [self scroll];
     }
-    _activityIndicatorView.center = _refleshView.center = CGPointMake(frame.size.width / 2, _dragingHeight / 2);
 }
 
 - (void)setSlimeMissWhenGoingBack:(BOOL)slimeMissWhenGoingBack
@@ -133,7 +132,7 @@
         [_activityIndicatorView.layer addAnimation:aniamtion
                                             forKey:@""];
 //        _slime.hidden = YES;
-        _refleshView.hidden = YES;
+        _refreshView.hidden = YES;
         if (!_unmissSlime){
             _slime.state = SRSlimeStateMiss;
         }else {
@@ -142,8 +141,8 @@
     }else {
         
         [_activityIndicatorView stopAnimating];
-        _refleshView.hidden = NO;
-        _refleshView.layer.transform = CATransform3DIdentity;
+        _refreshView.hidden = NO;
+        _refreshView.layer.transform = CATransform3DIdentity;
         [UIView transitionWithView:_scrollView
                           duration:0.3f
                            options:UIViewAnimationOptionCurveEaseOut
@@ -201,8 +200,10 @@
     if (_scrollView) {
         _upInset = upInset;
         _slime.viscous = MAX(_upInset, 32);
-        self.frame = CGRectMake(0, -self.frame.size.height, _scrollView.bounds.size.width, _dragingHeight);
+        CGRect frame = self.frame = CGRectMake(0, -self.frame.size.height, _scrollView.bounds.size.width, _dragingHeight);
         _slime.toPoint = CGPointMake(self.frame.size.width / 2, _dragingHeight / 2);
+        _activityIndicatorView.center = CGPointMake(frame.size.width / 2, frame.size.height / 2);
+        [self scrollViewDidScroll];
     }
 }
 
@@ -224,25 +225,29 @@
     }
 }
 
+- (void)fixRefresh {
+    _refreshView.center = CGPointMake(_slime.toPoint.x, self.frame.size.height - _slime.toPoint.y);
+}
+
 - (void)scroll {
     if (!_broken) {
         CGPoint p = _scrollView.contentOffset;
         CGRect frame = self.frame;
         _slime.frame = CGRectMake(0.0f, frame.size.height + p.y + _upInset,
                                   frame.size.width, -p.y);
-        _slime.startPoint = CGPointMake(frame.size.width / 2, -p.y - _upInset - _dragingHeight / 2);
+        _slime.toPoint = CGPointMake(frame.size.width / 2, -p.y - _upInset - _dragingHeight / 2);
         float l = -(p.y + _dragingHeight + _upInset);
         if (l <= _oldLength) {
             l = MIN(distansBetween(_slime.startPoint, _slime.toPoint), l);
-            CGPoint ssp = _slime.startPoint;
-            _slime.toPoint = CGPointMake(ssp.x, ssp.y - l);
+            CGPoint ssp = _slime.toPoint;
+            _slime.startPoint = CGPointMake(ssp.x, ssp.y - l);
             CGFloat pf = MIN(MAX((1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo, 0), 1);
-            _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+            _refreshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
         }else if (self.scrollView.isDragging) {
-            CGPoint ssp = _slime.startPoint;
-            _slime.toPoint = CGPointMake(ssp.x, ssp.y - l);
+            CGPoint ssp = _slime.toPoint;
+            _slime.startPoint = CGPointMake(ssp.x, ssp.y - l);
             CGFloat pf = MIN(MAX((1.0f-l/_slime.viscous) * (1.0f-kStartTo) + kStartTo, 0), 1);
-            _refleshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
+            _refreshView.layer.transform = CATransform3DMakeScale(pf, pf, 1);
         }
         _oldLength = l;
     }
@@ -256,7 +261,7 @@
         _slime.frame = bounds;
         _slime.toPoint = _slime.startPoint = CGPointMake(bounds.size.width / 2, _dragingHeight / 2);
     }
-    if (p.y <= - _dragingHeight - _upInset) {
+    if (p.y <= - _dragingHeight - _upInset && !_broken) {
         [self scroll];
         if (self.alpha != 1.0f) self.alpha = 1.0f;
     }else if (p.y < -_upInset) {
@@ -270,6 +275,7 @@
     }else {
         self.alpha = 0;
     }
+    [self fixRefresh];
 }
 
 - (void)scrollViewDidEndDraging

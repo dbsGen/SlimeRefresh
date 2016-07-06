@@ -86,7 +86,6 @@
         }
     }
 }
-
 #pragma mark - scrollView delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

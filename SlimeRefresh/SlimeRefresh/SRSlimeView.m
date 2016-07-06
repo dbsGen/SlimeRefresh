@@ -180,8 +180,10 @@ NS_INLINE CGPoint pointLineToArc(CGPoint center, CGPoint p2, float angle, CGFloa
             break;
         case SRSlimeStateShortening:
         {
-            _toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.8 + _startPoint.x,
-                                       (_toPoint.y - _startPoint.y)*0.8 + _startPoint.y);
+            _startPoint = CGPointMake((_startPoint.x - _toPoint.x)*0.8 + _toPoint.x,
+                                      (_startPoint.y - _toPoint.y)*0.8 + _toPoint.y);
+//            _toPoint = CGPointMake((_toPoint.x - _startPoint.x)*0.8 + _startPoint.x,
+//                                       (_toPoint.y - _startPoint.y)*0.8 + _startPoint.y);
             float p = distansBetween(_startPoint, _toPoint) / [self _getViscous];
             float percent =1 -p;
             float r = _radius * p;

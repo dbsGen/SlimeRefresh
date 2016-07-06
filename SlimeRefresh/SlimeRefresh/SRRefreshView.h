@@ -18,7 +18,7 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 @protocol SRRefreshDelegate;
 
 @interface SRRefreshView : UIView{
-    UIImageView     *_refleshView;
+    UIImageView     *_refreshView;
     SRSlimeView     *_slime;
 }
 
@@ -29,7 +29,7 @@ typedef void (^SRRefreshBlock)(SRRefreshView* sender);
 //set the slime's style by this property.
 @property (nonatomic, strong, readonly) SRSlimeView *slime;
 //set your refresh icon.
-@property (nonatomic, strong, readonly) UIImageView *refleshView;
+@property (nonatomic, strong, readonly) UIImageView *refreshView;
 //select one to receive the refreshing message.
 @property (nonatomic, copy)     SRRefreshBlock      block;
 @property (nonatomic, assign)   id<SRRefreshDelegate>   delegate;
