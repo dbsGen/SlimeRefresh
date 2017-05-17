@@ -266,7 +266,8 @@
         if (self.alpha != 1.0f) self.alpha = 1.0f;
     }else if (p.y < -_upInset) {
         [_slime setNeedsDisplay];
-        if (_slimeMissWhenGoingBack) self.alpha = -(p.y + _upInset) / _dragingHeight;
+        //if (_slimeMissWhenGoingBack)
+            self.alpha = -(p.y + _upInset) / _dragingHeight;
         if (!_broken) {
             CGRect bounds = self.bounds;
             _slime.toPoint = _slime.startPoint = CGPointMake(bounds.size.width / 2, _dragingHeight / 2);
